@@ -38,8 +38,3 @@ jobs:
           name: node-app
           path: .
 
-      
-      run: |
-        npm run build  # Replace with your build command
-        npm test       # Replace with your test command
->>>>>>> 1dd4fccdbb049ddccf16e16b686f2ac17ebd0831
