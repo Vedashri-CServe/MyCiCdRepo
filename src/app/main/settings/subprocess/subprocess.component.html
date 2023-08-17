@@ -1,0 +1,58 @@
+<div class="row">
+    <div class="col-md-4 col-12">
+        <div class="d-flex justify-content-between align-items-center m-1">
+            <label class="d-flex align-items-center">Show
+                <select class="form-control mx-25" [(ngModel)]="selectedOption">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+            </label>
+        </div>
+    </div>
+    <div class="col-md-8 col-12 d-flex justify-content-start justify-content-md-end">
+        <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pb-md-0">
+            <label class="d-flex align-items-center mr-1 mb-0">Search <input [(ngModel)]="searchValue"
+                    name="searchValue" type="search" class="form-control ml-25" (keyup)="filterUpdate($event)"
+                    (search)="filterUpdate($event)" /></label>
+            <!-- <button type="button" class="btn btn-icon btn-tms-secondary btn-tms-theme" rippleEffect>
+          <span [data-feather]="'download'"></span>
+        </button>
+        <button type="button" class="btn btn-icon btn-tms-secondary btn-tms-theme mx-1" rippleEffect>
+          <span [data-feather]="'upload'"></span>
+        </button> -->
+            <button class="btn btn-primary round" *ngIf="isActionShow" rippleEffect
+                (click)="toggleSidebar('add-subprocess','Add','')">
+                <i data-feather="plus" class="d-sm-none d-inline-block mr-0 mr-sm-1"></i><span
+                    class="d-none d-sm-inline-block">Add SubProcess</span>
+            </button>
+        </div>
+    </div>
+</div>
+<ngx-datatable #tableRowDetails [rows]="rows" [rowHeight]="50" class="bootstrap core-bootstrap" [limit]="selectedOption"
+    [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true">
+    <ngx-datatable-column name="Process" prop="ProcessName" [resizeable]="true"></ngx-datatable-column>
+    <ngx-datatable-column name="Sub-Process" prop="SubprocessName" [resizeable]="true"></ngx-datatable-column>
+    <ngx-datatable-column name="Actions" [sortable]="false" [resizeable]="false" *ngIf="isActionShow">
+        <ng-template ngx-datatable-cell-template let-row="row">
+            <div ngbDropdown container="body">
+                <button class="btn btn-icon btn-tms-secondary mr-1 btn-tms-theme"  ngbTooltip="Edit" placement="left" rippleEffect
+                    (click)="toggleSidebar('add-subprocess','Edit',row)">
+                    <span [data-feather]="'edit'"></span>
+                </button>
+                <button class="btn btn-icon btn-tms-secondary btn-tms-delete" ngbTooltip="Delete" placement="left" [swal]="SweetAlertConfirmText"
+                    rippleEffect>
+                    <span [data-feather]="'trash-2'"></span>
+                </button>
+                <swal #SweetAlertConfirmText (open)="ConfirmTextOpen(row)"></swal>
+            </div>
+        </ng-template>
+    </ngx-datatable-column>
+</ngx-datatable>
+
+<!-- Add Sub Process -->
+<core-sidebar class="modal modal-slide-in sidebar-todo-modal fade" name="add-subprocess" overlayClass="modal-backdrop">
+    <app-add-subprocess></app-add-subprocess>
+</core-sidebar>
+<!--/ Add Sub Process -->

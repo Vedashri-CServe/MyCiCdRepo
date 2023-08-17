@@ -1,0 +1,190 @@
+<div class="row">
+  <div class="col-md-5 col-12">
+    <div class="d-flex justify-content-between align-items-center m-1">
+      <label class="d-flex align-items-center"
+        >Show
+        <select class="form-control mx-25" [(ngModel)]="selectedOption"  (change)="selectDropdown(selectedOption)">
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </label>
+    </div>
+  </div>
+  <div
+    class="col-md-7 col-12 d-flex justify-content-start justify-content-md-end"
+  >
+    <div
+      class="d-flex align-items-center justify-content-end pr-1 pb-1 pb-md-0"
+    >
+      <label class="d-flex align-items-center mr-1 mb-0"
+        >Search
+        <input
+          [(ngModel)]="searchValue"
+          name="searchValue"
+          type="search"
+          class="form-control ml-25"
+          (keyup)="filterUpdate($event)"
+          (search)="filterUpdate($event)"
+      /></label>
+      <button
+        class="btn btn-primary round mr-1"
+        *ngIf="subMenu.IsAdd"
+        rippleEffect
+        (click)="toggleSidebar('add-cpa', 'Add', subMenu)"
+      >
+        <i data-feather="plus" class="d-sm-none d-inline-block mr-0 mr-sm-1"></i
+        ><span class="d-none d-sm-inline-block"
+          >Add {{ subMenu.DisplayName }}</span
+        >
+      </button>
+      <!-- Export CSV Data  -->
+      <a class="btn btn-outline-secondary float-right ml-1 mb-0"  ngbTooltip="Export" (click)="exportReport()" rippleEffect><span
+        [data-feather]="'download'"></span></a>
+    </div>
+  </div>
+</div>
+<!--    -- pagination code -->
+<ngx-datatable
+  [rows]="rows"
+  [rowHeight]="50"
+  [count]="totalElements"
+  [offset]="Number"
+  [limit]="size" 
+  class="bootstrap core-bootstrap"
+  [columnMode]="ColumnMode.force"
+  [offset]="Number"
+  [limit]="selectedOption"
+  [externalPaging]="true"
+  (page)="setPage($event)"
+  [headerHeight]="50"
+  [footerHeight]="50"
+  [scrollbarH]="true"
+>
+  <ngx-datatable-column
+    name="Client Name"
+    prop="Name"
+    [width]="160"
+    [resizeable]="true"
+  >
+    <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+      <div class="d-flex align-items-center">
+        <div class="cell-line-height">
+          <a
+            routerLink="/apps/user/user-view/{{ row.id }}"
+            class="font-medium-1 d-block"
+            [title]="name"
+            ><span class="font-weight-bold">{{ name }}</span></a
+          >
+        </div>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column
+    name="Contracted Hours"
+    prop="ContractedHours"
+    [resizeable]="true"
+    cellClass="justify-content-end"
+  ></ngx-datatable-column>
+  <ngx-datatable-column
+    name="Internal Hours"
+    prop="InternalHours"
+    [resizeable]="true"
+    cellClass="justify-content-end"
+  ></ngx-datatable-column>
+  <!-- <ngx-datatable-column name="Status" prop="status" [resizeable]="true"></ngx-datatable-column> -->
+  <ngx-datatable-column
+    *ngFor="let col of columns"
+    [name]="col.name"
+    [prop]="col.prop"
+    [resizeable]="false"
+  >
+  </ngx-datatable-column>
+  <ngx-datatable-column
+    [width]="50"
+    [canAutoResize]="false"
+    [draggable]="false"
+    [resizeable]="false"
+    [sortable]="false">
+    <ng-template
+      ngx-datatable-header-template
+      let-value="value"
+      let-allRowsSelected="allRowsSelected"
+      let-selectFn="selectFn">
+      <div class="custom-control custom-checkbox pl-0">
+        <div ngbDropdown container="body" ngbTooltip="Columns"  placement="bottom">
+          <button ngbDropdownToggle type="button" class="btn p-0" rippleEffect>
+            <i class="d-block" [data-feather]="'settings'" [size]="16"></i>
+          </button>
+          <div ngbDropdownMenu>
+            <ul class="pl-0">
+              <li
+                *ngFor="let col of allColumns"
+                ngbDropdownItem
+                class="d-flex align-items-center">
+                <input
+                  type="checkbox"
+                  [id]="col.name"
+                  (click)="toggle(col)"
+                  [checked]="isChecked(col)"
+                />
+                <label [attr.for]="col.name" class="pl-1">{{ col.name }}</label>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column
+    name="Actions"
+    [width]="100"
+    [sortable]="false"
+    [resizeable]="false"
+    *ngIf="subMenu.IsUpdate || subMenu.IsDelete || subMenu.IsActive">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <div ngbDropdown container="body" class="d-flex">
+        <button
+          *ngIf="subMenu.IsUpdate"
+          class="btn btn-icon btn-tms-secondary mr-1 btn-tms-theme"
+          ngbTooltip="Edit"
+          placement="left"
+          rippleEffect
+          (click)="toggleSidebar('add-cpa', 'Edit', row)">
+          <span [data-feather]="'edit'"></span>
+        </button>
+        <button
+          *ngIf="subMenu.IsDelete"
+          class="btn btn-icon btn-tms-secondary mr-1 btn-tms-delete"
+          ngbTooltip="Delete"
+          placement="left"
+          [swal]="SweetAlertConfirmText"
+          rippleEffect
+        >
+          <span [data-feather]="'trash-2'"></span>
+        </button>
+        <swal #SweetAlertConfirmText (open)="ConfirmTextOpen(row)"></swal>
+        <button
+          *ngIf="subMenu.IsActive"
+          class="btn btn-icon btn-tms-secondary btn-tms-theme"
+          ngbTooltip="{{row.IsAvailable ? 'Active' : 'In-Active'}}"
+          placement="left"
+          [swal]="SweetAlertConfirmStatus"
+          rippleEffect>
+          <span [data-feather]="'archive'"></span>
+        </button>
+        <swal #SweetAlertConfirmStatus (open)="ConfirmStatusOpen(row)"></swal>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>
+<!-- Add Cpa -->
+<core-sidebar
+  class="modal modal-slide-in sidebar-todo-modal fade"
+  name="add-cpa"
+  overlayClass="modal-backdrop">
+  <app-add-cpa></app-add-cpa>
+</core-sidebar>
+<!--/ Add Cpa -->
+<block-ui> </block-ui>

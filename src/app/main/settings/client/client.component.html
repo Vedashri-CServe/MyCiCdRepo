@@ -1,0 +1,125 @@
+<div class="row">
+  <div class="col-md-5 col-12">
+    <div class="d-flex justify-content-between align-items-center m-1">
+      <label class="d-flex align-items-center">Show
+        <select class="form-control mx-25" [(ngModel)]="selectedOption" (change)="selectDropdown(selectedOption)">
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </label>
+    </div>
+  </div>
+  <div class="col-md-7 col-12 d-flex justify-content-start justify-content-md-end">
+    <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pb-md-0">
+      <label class="d-flex align-items-center mr-1 mb-0">Search <input [(ngModel)]="searchValue" name="searchValue"
+          type="search" class="form-control ml-25" (keyup)="filterUpdate($event)"
+          (search)="filterUpdate($event)" /></label>
+      <button class="btn btn-primary round mr-1" *ngIf="subMenu.IsAdd" rippleEffect
+        (click)="toggleSidebar('add-client','Add',subMenu)">
+        <i data-feather="plus" class="d-sm-none d-inline-block mr-0 mr-sm-1"></i><span
+          class="d-none d-sm-inline-block">Add {{subMenu.DisplayName}}</span>
+      </button>
+
+      <a class="btn btn-outline-secondary float-right ml-1 mb-0" (click)="openSaveModel(modalSAVE)" ngbTooltip="Import"
+        rippleEffect><span [data-feather]="'upload'"></span></a>
+      <!-- Export CSV Data  -->
+      <a class="btn btn-outline-secondary float-right ml-1 mb-0" ngbTooltip="Export" (click)="exportReport()"
+        rippleEffect><span [data-feather]="'download'"></span></a>
+    </div>
+  </div>
+</div>
+<ngx-datatable [rows]="rows" [rowHeight]="50" class="bootstrap core-bootstrap" [limit]="selectedOption"
+  [columnMode]="ColumnMode.force" [headerHeight]="50" [count]="totalElements" [externalPaging]="true" [offset]="Number"
+  [limit]="size" (page)="setPage($event)" [footerHeight]="50" [scrollbarH]="true">
+  <ngx-datatable-column name="Client Name" prop="CPAName" [resizeable]="true">
+    <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+      <div class="d-flex align-items-center">
+        <div class="cell-line-height">
+          <a routerLink="/apps/user/user-view/{{ row.id }}" [title]="name" class="font-medium-1 d-block"><span
+              class="font-weight-bold">{{ name }}</span></a>
+        </div>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Project Name" prop="Name" [resizeable]="true"></ngx-datatable-column>
+  <ngx-datatable-column name="Type Of Work" prop="typeofwork" [resizeable]="true"></ngx-datatable-column>
+  <ngx-datatable-column name="Status" prop="status" [resizeable]="true"></ngx-datatable-column>
+  <ngx-datatable-column name="Actions" [sortable]="false" [resizeable]="false"
+    *ngIf="subMenu.IsUpdate || subMenu.IsDelete || subMenu.IsActive">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <div ngbDropdown container="body">
+        <button *ngIf="subMenu.IsUpdate" class="btn btn-icon btn-tms-secondary mr-1 btn-tms-theme" ngbTooltip="Edit"
+          placement="left" rippleEffect (click)="toggleSidebar('add-client','Edit',row)">
+          <span [data-feather]="'edit'"></span>
+        </button>
+        <button *ngIf="subMenu.IsDelete" class="btn btn-icon btn-tms-secondary mr-1 btn-tms-delete" ngbTooltip="Delete"
+          placement="left" [swal]="SweetAlertConfirmText" rippleEffect>
+          <span [data-feather]="'trash-2'"></span>
+        </button>
+        <swal #SweetAlertConfirmText (open)="ConfirmTextOpen(row)"></swal>
+        <button *ngIf="subMenu.IsActive" class="btn btn-icon btn-tms-secondary btn-tms-theme"
+          ngbTooltip="{{row.IsAvailable ? 'Active' : 'In-Active'}}" placement="left" [swal]="SweetAlertConfirmStatus"
+          rippleEffect>
+          <span [data-feather]="'archive'"></span>
+        </button>
+        <swal #SweetAlertConfirmStatus (open)="ConfirmStatusOpen(row)"></swal>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>
+<!-- Add Client -->
+<core-sidebar class="modal modal-slide-in sidebar-todo-modal fade" name="add-client" overlayClass="modal-backdrop">
+  <app-add-client></app-add-client>
+</core-sidebar>
+<!--/ Add Client -->
+
+<!-- <ng-template #modalSAVE let-modal>
+  <div class="modal-header">
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body workstopmodel text-dark" tabindex="0" ngbAutofocus>
+    <ul class="p-0">
+      <h3 class="pb-1"><strong>Upload File</strong></h3>
+      <div class="custom-file">
+        <input type="file"(change)="onFileSelected($event)" accept=".csv,.xlsx" />
+      </div>
+      <div class="d-flex justify-content-center align-items-center">
+        <a class="btn btn-link mb-0" ngbTooltip="Export" href="{{file}}" rippleEffect>Sample File</a>
+      </div>
+      <div class="form-group d-flex justify-content-end w-100">
+        <button type="button" rippleeffect class="btn btn-primary mr-1 waves-effect waves-float waves-light round mt-1"
+          (click)="SubmitApprove()" aria-label="Close">Submit</button>
+        <button type="button" rippleeffect (click)="modal.dismiss('Cross click')"
+          class="btn btn-outline-primary mr-1 waves-effect waves-float waves-light round mt-1">Cancel</button>
+      </div>
+    </ul>
+  </div>
+</ng-template> -->
+<ng-template #modalSAVE let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel1">Upload File</h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body workstopmodel" tabindex="0" ngbAutofocus>
+    <label for="file-upload-single">Import file:</label>
+    <div class="custom-file">
+      <input type="file" (change)="onFileSelected($event)" accept=".csv,.xlsx" />
+    </div>
+    Download <a class="btn btn-link mb-0 pl-0" ngbTooltip="Download sample file" href="{{file}}" placement="right"
+      rippleEffect>Sample File</a>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="SubmitApprove()" [disabled]="mainArray.length == 0"
+      rippleEffect>
+      Submit
+    </button>
+  </div>
+</ng-template>
+<!-- / Modal -->
+<block-ui> </block-ui>

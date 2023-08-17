@@ -1,0 +1,80 @@
+<div class="slideout-content">
+  <!-- Modal to add new user starts-->
+  <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+    <div class="modal-dialog">
+      <form class="add-new-user modal-content pt-0" (ngSubmit)="(newTaskForm.form.valid)" #newTaskForm="ngForm">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="toggleSidebar('add-task')">
+          ×
+        </button>
+        <div class="modal-header mb-1">
+          <h5 class="modal-title" id="exampleModalLabel">{{!isEdit ? 'Add Task' : 'Edit Task'}}</h5>
+        </div>
+        <div class="modal-body flex-grow-1 px-3">
+          <div class="form-group mb-2">
+            <label class="form-label">Select Client</label>
+            <ng-select #selectMultiLimited="ngModel" [items]="cpaList" [multiple]="true" bindLabel="name"
+              [(ngModel)]="selectMultiLimitedSelected" [ngModelOptions]="{standalone: true}" [closeOnSelect]="false"required>
+              <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                <span class="ng-value-label"> {{ item.name }}</span>
+                <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+              </ng-template>
+            </ng-select>
+            <span *ngIf="newTaskForm.submitted " class="invalid-form">
+              <small class="form-text text-danger" *ngIf="selectMultiLimitedSelected.length == 0">This field is
+                required!</small>
+            </span>
+          </div>
+          <div class="form-group">
+            <label>Task Name</label>
+            <input class="form-control" type="text" oninput="this.value = this.value.replace(/[^A-Za-z0-9-,.;'&/.() ]|^ /g,'')" name="taskName" [(ngModel)]="taskName"
+              [class.error]="newTaskForm.submitted && FTaskNameRef.invalid" #FTaskNameRef="ngModel"
+              placeholder="Task Name" required />
+            <span *ngIf="newTaskForm.submitted && FTaskNameRef.invalid" class="invalid-form">
+              <small class="form-text text-danger" *ngIf="FTaskNameRef.errors.required">This field is
+                required!</small>
+            </span>
+          </div>
+          <div class="form-group">
+            <label>Estimated Hours</label>
+            <input class="form-control" type="text" placeholder="00:00" mask="Hh:m0" name="estimatedHours" [(ngModel)]="estimatedHours" [class.error]="newTaskForm.submitted && FEstimatedHoursRef.invalid" #FEstimatedHoursRef="ngModel" required />
+            <span *ngIf="(newTaskForm.submitted && FEstimatedHoursRef.invalid) || estimatedHours == 0" class="invalid-form">
+              <small class="form-text text-danger" *ngIf="FEstimatedHoursRef.errors?.required && newTaskForm.submitted">This field is required!</small>
+              <small class="form-text text-danger" *ngIf="estimatedHours == 0 && !FEstimatedHoursRef.errors?.required">Enter valid time</small>
+            </span>
+          </div>
+          <div class="form-group">
+            <div class="d-flex">
+              <div class="custom-control custom-radio w-100">
+                <input type="radio" id="customRadio1" name="checkProductive" (change)="radioChange($event)"
+                  [(ngModel)]="checkProductive" value="Productive" class="custom-control-input" checked />
+                <label class="custom-control-label" for="customRadio1">Productive</label>
+              </div>
+              <div class="custom-control custom-radio w-100">
+                <input type="radio" id="customRadio2" name="checkProductive" (change)="radioChange($event)" #tradio1
+                  [(ngModel)]="checkProductive" value="Non-Productive" class="custom-control-input" />
+                <label class="custom-control-label" for="customRadio2">Non-productive</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="d-flex">
+              <div class="custom-control custom-radio w-100">
+                <input type="radio" id="customRadio3" name="checkBill" [disabled]="tradio1.checked == true"
+                  [(ngModel)]="checkBill" value="Billable" class="custom-control-input" checked />
+                <label class="custom-control-label" for="customRadio3">Billable</label>
+              </div>
+              <div class="custom-control custom-radio w-100">
+                <input type="radio" id="customRadio4" name="checkBill" [(ngModel)]="checkBill" value="Non-Billable"
+                  class="custom-control-input" />
+                <label class="custom-control-label" for="customRadio4">Non-billable</label>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary mr-1" (click)="submit(newTaskForm)" rippleEffect>{{!isEdit ? 'Add Task Now':'Update Task Now'}}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Modal to add new user Ends-->
+</div>
+<block-ui> </block-ui>

@@ -1,0 +1,52 @@
+<div class="slideout-content">
+  <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+    <div class="modal-dialog">
+      <form class="add-client modal-content pt-0" (ngSubmit)="(newClientForm.form.valid)" #newClientForm="ngForm">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="toggleSidebar('add-client')">×</button>
+        <div class="modal-header mb-1">
+          <h5 class="modal-title" id="exampleModalLabel">Add Project</h5>
+        </div>
+        <div class="modal-body flex-grow-1 px-3">
+          <div class="form-group mb-2">
+            <label class="form-label">Client Name</label>
+            <ng-select [items]="cpaList"  bindLabel="name" (change)="filterByTypeofWrk(cpaName)" name="cpaName" [(ngModel)]="cpaName" [loading]="selectBasicLoading" #FcpaNameRef="ngModel" required> </ng-select>
+             <span *ngIf="newClientForm.submitted && FcpaNameRef.invalid"   class="invalid-form">
+              <small class="form-text text-danger" *ngIf="FcpaNameRef.errors.required">This field is
+            required!</small>
+            </span>
+          </div>
+          <div class="form-group">
+            <label>Project Name</label>
+            <input class="form-control" id="form-client-name" type="text"  oninput="this.value = this.value.replace(/[^A-Za-z0-9-,.;'&/.() ]|^ /g,'')" placeholder="Project Name" name="clientName"
+              [(ngModel)]="clientName" (click)="$event.stopPropagation()" #FClientNameRef="ngModel" required />
+            <span *ngIf="newClientForm.submitted && FClientNameRef.invalid" class="invalid-form">
+              <small class="form-text text-danger" *ngIf="FClientNameRef.errors.required">This field is
+                required!</small>
+            </span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Type of work</label>
+            <ng-select [items]="typeOfWorkArray" bindLabel="name"  name="typeWork" [(ngModel)]="typeWork"
+              [class.error]="newClientForm.submitted && FWorkTypeRef.invalid" #FWorkTypeRef="ngModel" required>
+            </ng-select>
+            <span *ngIf="newClientForm.submitted && FWorkTypeRef.invalid" class="invalid-form">
+              <small class="form-text text-danger" *ngIf="FWorkTypeRef.errors.required">This field is
+                required!</small>
+            </span>
+          </div>
+          <div class="form-group">
+            <div class="custom-control custom-checkbox" style="margin-top: 10%;">
+              <input type="checkbox" class="custom-control-input" id="customCheck1" name="SOPCheckbox"
+                [(ngModel)]="SOPCheckbox" [class.error]="newClientForm.submitted && FSOPRef.invalid"
+                #FSOPRef="ngModel" />
+              <label class="custom-control-label" for="customCheck1">SOP</label>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary mr-1" (click)="submit(newClientForm)" rippleEffect>{{!isEdit ? 'Add Project Now':'Update Project Now'}}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+ </div>
+<block-ui> </block-ui>

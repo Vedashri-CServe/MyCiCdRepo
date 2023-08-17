@@ -1,0 +1,97 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <section class="users-list-wrapper">
+            <div class="card">
+                <section id="basic-tabs-components">
+                    <div class="row match-height">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card-body">
+                                <ul ngbNav #nav="ngbNav" class="nav-tabs">
+                                    <li ngbNavItem *ngIf="subMenu[0].IsShow">
+                                        <a ngbNavLink>{{subMenu[0].DisplayName}}</a>
+                                        <ng-template ngbNavContent>
+                                            <app-cpa-report></app-cpa-report>
+                                        </ng-template>
+                                    </li>
+                                    <li ngbNavItem *ngIf="subMenu[1].IsShow" >
+                                        <a ngbNavLink>{{subMenu[1].DisplayName}}</a>
+                                        <ng-template ngbNavContent>
+                                            <app-client-report></app-client-report>
+                                        </ng-template>
+                                    </li>
+                                    <li ngbNavItem *ngIf="subMenu[2].IsShow">
+                                        <a ngbNavLink>{{subMenu[2].DisplayName}}</a>
+                                        <ng-template ngbNavContent>
+                                            <app-user-report></app-user-report>
+                                        </ng-template>
+                                    </li>
+                                    <li ngbNavItem *ngIf="subMenu[3].IsShow">
+                                        <a ngbNavLink>{{subMenu[3].DisplayName}}</a>
+                                        <ng-template ngbNavContent>
+                                            <app-timesheet></app-timesheet>
+                                        </ng-template>
+                                    </li>
+                                    <li ngbNavItem *ngIf="subMenu[4].IsShow">
+                                        <a ngbNavLink>{{subMenu[4].DisplayName}}</a>
+                                        <ng-template ngbNavContent>
+                                            <app-ap-report></app-ap-report>
+                                        </ng-template>
+                                    </li>
+                                    <!-- <li ngbNavItem *ngIf="subMenu[0].IsShow">
+                                        <a ngbNavLink>Approvals</a>
+                                        <ng-template ngbNavContent>
+                                            <app-approvals></app-approvals>
+                                        </ng-template>
+                                    </li> -->
+                                    <li ngbNavItem *ngIf="subMenu[5].IsShow">
+                                        <a ngbNavLink>{{subMenu[5].DisplayName}}</a>
+                                        <ng-template ngbNavContent>
+                                            <app-activity></app-activity>
+                                        </ng-template>
+                                    </li>
+                                    <!-- <li ngbNavItem *ngIf="subMenu[0].IsShow">
+                                        <a ngbNavLink>Worklogs</a>
+                                        <ng-template ngbNavContent>
+                                            <app-worklogs></app-worklogs>
+                                        </ng-template>
+                                    </li> -->
+                                    <li ngbNavItem *ngIf="subMenu[7].IsShow">
+                                        <a ngbNavLink>{{subMenu[7].DisplayName}}</a>
+                                        <ng-template ngbNavContent>
+                                            <app-workload></app-workload>
+                                        </ng-template>
+                                    </li>
+                                    <li ngbNavItem *ngIf="subMenu[8].IsShow">
+                                        <a ngbNavLink>{{subMenu[8].DisplayName}}</a>
+                                        <ng-template ngbNavContent>
+                                            <app-kra-report></app-kra-report>
+                                        </ng-template>
+                                    </li>
+                                    <li ngbNavItem *ngIf="subMenu[9].IsShow">
+                                        <a ngbNavLink>{{subMenu[9].DisplayName}}</a>
+                                        <ng-template ngbNavContent>
+                                            <app-am-report></app-am-report>
+                                        </ng-template>
+                                    </li>
+                                    <li ngbNavItem *ngIf="subMenu[10].IsShow">
+                                        <a ngbNavLink>{{subMenu[10].DisplayName}}</a>
+                                        <ng-template ngbNavContent>
+                                            <app-userlog></app-userlog>
+                                        </ng-template>
+                                    </li>
+                                    <li ngbNavItem *ngIf="subMenu[11].IsShow">
+                                        <a ngbNavLink>{{subMenu[11].DisplayName}}</a>
+                                        <ng-template ngbNavContent>
+                                            <app-audit></app-audit>
+                                        </ng-template>
+                                    </li>
+                                </ul>
+                                <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </div>
+</div>

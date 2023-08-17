@@ -1,0 +1,86 @@
+<div class="row">
+  <div class="card-body pb-1">
+    <div class="col-md-12 col-12 d-flex justify-content-start justify-content-md-end">
+      <form class="form-inline">
+        <div class="form-group">
+          <div class="input-group w-0">
+            <input name="datepicker" class="form-control" [maxDate]="maxDate" ngbDatepicker #datepicker="ngbDatepicker"
+              [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2"
+              [dayTemplate]="rangeSelectionDP" outsideDays="hidden" [startDate]="fromDate!" />
+            <ng-template #rangeSelectionDP let-date let-focused="focused">
+              <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+                (mouseleave)="hoveredDate = null">
+                {{ date.day }}
+              </span>
+            </ng-template>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <input #dpFromDate class="form-control" placeholder="{{monthFirstdate}}" name="dpFromDate" readonly
+              [value]="formatter.format(fromDate)" />
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary feather icon-calendar" (click)="datepicker.toggle()"
+                type="button" rippleEffect></button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group ml-sm-2">
+          <div class="input-group">
+            <input #dpToDate class="form-control" placeholder="{{monthLastDate}}" name="dpToDate" readonly
+              [value]="formatter.format(toDate)" />
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary feather icon-calendar" (click)="datepicker.toggle()"
+                type="button" rippleEffect></button>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary round ml-sm-2" rippleEffect (click)="searchData()" [disabled]="isDisable">
+          <i data-feather="plus" class="d-sm-none d-inline-block mr-0 mr-sm-1"></i><span
+            class="d-none d-sm-inline-block">Search</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="row pb-1 align-items-center">
+  <div class="col-md-5 col-12">
+    <div class="d-flex justify-content-between align-items-center">
+      <label class="d-flex align-items-center">Show
+        <select class="form-control mx-25" [(ngModel)]="selectedOption" (change)="selectDropdown(selectedOption)">
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </label>
+      <label class="text-primary"><strong>Total Time : {{this.totalTime}} </strong> </label>
+    </div>
+  </div>
+  <div class="col-md-7 col-12 d-flex justify-content-start justify-content-md-end">
+    <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pb-md-0">
+      <label class="d-flex align-items-center mr-1 mb-0">Search <input [(ngModel)]="searchValue" name="searchValue"
+          type="search" class="form-control ml-25" (keyup)="filterUpdate($event)"
+          (search)="filterUpdate($event)" /></label>
+      <a class="btn btn-outline-secondary float-right ml-1 mb-0" ngbTooltip="Export" (click)="exportReport()"
+        rippleEffect><span [data-feather]="'download'"></span></a>
+    </div>
+
+  </div>
+</div>
+<ngx-datatable [rows]="rows" [rowHeight]="50" class="bootstrap core-bootstrap" [count]="totalElements"
+  [externalPaging]="true" [offset]="Number" (page)="setPage($event)" [limit]="selectedOption"
+  [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true">
+  <ngx-datatable-column name="Start Date" prop="TimeLogStartDate" [width]="120"></ngx-datatable-column>
+  <ngx-datatable-column name="End Date" prop="TimeLogEndDate" [width]="120"></ngx-datatable-column>
+  <ngx-datatable-column name="Start Time" prop="StartTime" [width]="120"></ngx-datatable-column>
+  <ngx-datatable-column name="End Time" prop="EndTime" [width]="120"></ngx-datatable-column>
+  <ngx-datatable-column name="Total Time" prop="TotalTime" [width]="120"></ngx-datatable-column>
+  <ngx-datatable-column name="Client" prop="CPAName" [width]="150"></ngx-datatable-column>
+  <ngx-datatable-column name="Project" prop="ClientName" [width]="150"></ngx-datatable-column>
+  <ngx-datatable-column name="Task/Process" prop="TaskName" [width]="200"></ngx-datatable-column>
+  <ngx-datatable-column name="Sub process" prop="SubprocessName" [width]="200"></ngx-datatable-column>
+  <ngx-datatable-column name="Is Manual" prop="isManual" [width]="200"></ngx-datatable-column>
+</ngx-datatable>
+<block-ui> </block-ui>

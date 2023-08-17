@@ -1,0 +1,70 @@
+@import '@core/scss/angular/libs/datatables.component.scss';
+@import '@core/scss/angular/libs/select.component.scss';
+@import '@core/scss/base/bootstrap-extended/include';
+@import '@core/scss/angular/libs/toastr.component.scss';
+@import '@core/scss/angular/libs/blockui.component.scss';
+@import '@core/scss/angular/libs/file-uploader.component.scss';
+
+.btn-tms-secondary {
+    background: $tms-secondary;
+    color: $gray-800;
+
+    &:hover {
+        color: $white;
+
+        &.btn-tms-delete {
+            background: $danger;
+        }
+
+        &.btn-tms-theme {
+            background: $tms;
+        }
+    }
+}
+
+.select_color {
+    list-style: none;
+    padding: 0;
+    max-width: 250px;
+    gap: 10px;
+
+    li {
+        padding: 15px;
+        position: relative;
+        border-radius: 50%;
+        border: 1px solid transparent;
+
+        input {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            left: 0;
+            z-index: 9;
+            opacity: 0;
+        }
+
+        &.active {
+            border: 1px solid #000;
+        }
+    }
+}
+
+.tab-pane {
+    .ngx-datatable {
+        &.fixed-row {
+            .datatable-scroll {
+                .datatable-body-row {
+                    .datatable-body-cell {
+                        white-space: normal;
+                        word-break: break-word;
+                        .color-font-none{
+                            font-size:0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

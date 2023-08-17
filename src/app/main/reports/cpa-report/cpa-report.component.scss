@@ -1,0 +1,10 @@
+@import "@core/scss/angular/libs/select.component.scss";
+
+.reportFilter {
+  .dropdown-item {
+    padding: 10px;
+  }
+  .dropdown-menu {
+    min-width: 250px;
+  }
+}

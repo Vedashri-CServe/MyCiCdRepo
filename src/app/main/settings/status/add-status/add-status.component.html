@@ -1,0 +1,61 @@
+<div class="slideout-content">
+  <!-- Modal to add new user starts-->
+  <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+    <div class="modal-dialog">
+      <form class="add-new-user modal-content pt-0" (ngSubmit)="(newStatusForm.form.valid)" #newStatusForm="ngForm">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="toggleSidebar('add-status')">
+          ×
+        </button>
+        <div class="modal-header mb-1">
+          <h5 class="modal-title" id="exampleModalLabel" >Add Status</h5>
+        </div>
+        <div class="modal-body flex-grow-1">
+          <div class="form-group">
+            <label for="largeInput">Status </label>
+            <input class="form-control" id="largeInput" type="text" oninput="this.value = this.value.replace(/[^A-Za-z0-9-,.;'&/.() ]|^ /g,'')" placeholder="Enter Status" name="statusName" [(ngModel)]="statusName" [class.error]="newStatusForm.submitted && FStatusNameRef.invalid"
+            #FStatusNameRef="ngModel" required aria-label="Name" aria-describedby="basic-icon-default-fullname2"/>
+            <span *ngIf="newStatusForm.submitted && FStatusNameRef.invalid" class="invalid-form">
+              <small class="form-text text-danger" *ngIf="FStatusNameRef.errors.required">This field is required!</small>
+            </span>
+          </div>
+          <!-- ngx-color-picker -->
+          <div class="form-group">
+            <label>Select status color</label>
+            <ul class="d-flex flex-wrap select_color">
+              <li [ngClass]="selectedColor === arrayColors.color1 ? 'active' : '' " [style.background]="arrayColors.color1"><input class="rounded" type="radio" name="color"
+                  value={{arrayColors.color1}} (click)="changeStatus($event.target.value)"/></li>
+              <li [ngClass]="selectedColor === arrayColors.color2 ? 'active' : '' " [style.background]="arrayColors.color2"><input class="rounded" type="radio" name="color"
+                  value={{arrayColors.color2}} (click)="changeStatus($event.target.value)"/></li>
+              <li [ngClass]="selectedColor === arrayColors.color3 ? 'active' : '' " [style.background]="arrayColors.color3"><input class="rounded" type="radio" name="color"
+                  value={{arrayColors.color3}} (click)="changeStatus($event.target.value)"/></li>
+              <li [ngClass]="selectedColor === arrayColors.color4 ? 'active' : '' " [style.background]="arrayColors.color4"><input class="rounded" type="radio" name="color"
+                  value={{arrayColors.color4}} (click)="changeStatus($event.target.value)"/></li>
+              <li [ngClass]="selectedColor === arrayColors.color5 ? 'active' : '' " [style.background]="arrayColors.color5"><input class="rounded" type="radio" name="color"
+                  value={{arrayColors.color5}} (click)="changeStatus($event.target.value)"/></li>
+              <li [ngClass]="selectedColor === arrayColors.color6 ? 'active' : '' " [style.background]="arrayColors.color6"><input class="rounded" type="radio" name="color"
+                  value={{arrayColors.color6}} (click)="changeStatus($event.target.value)"/></li>
+              <li [ngClass]="selectedColor === arrayColors.color7 ? 'active' : '' " [style.background]="arrayColors.color7"><input class="rounded" type="radio" name="color"
+                  value={{arrayColors.color7}} (click)="changeStatus($event.target.value)"/></li>
+              <li [ngClass]="selectedColor === arrayColors.color8 ? 'active' : '' " [style.background]="arrayColors.color8"><input class="rounded" type="radio" name="color"
+                  value={{arrayColors.color8}} (click)="changeStatus($event.target.value)"/></li>
+              <li [ngClass]="selectedColor === color ? 'active' : '' " [style.background]="color"><input class="rounded" type="radio" name="color"
+                  value={{color}} (click)="changeStatus($event.target.value)"/></li>
+            </ul>
+            <div class="d-flex justify-content-end w-100">
+              <a href="javascript:void(0)" [(colorPicker)]="color"  [cpOKButtonClass]= "'btn btn-primary btn-xs'"> + Add more color </a>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary mr-1" (click)="submit(newStatusForm)"
+            rippleEffect>Submit</button>
+          <button type="reset" class="btn btn-outline-secondary" (click)="toggleSidebar('add-status')" rippleEffect>
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Modal to add new user Ends-->
+</div>
+<block-ui> </block-ui>

@@ -1,0 +1,176 @@
+<div class="slideout-content">
+  <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+    <div [ngClass]="!isEdit ? 'modal-dialog' : 'w-75 modal-dialog'">
+      <div class="add-cpa modal-content pt-0">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="toggleSidebar('add-cpa')">
+          ×
+        </button>
+        <div class="modal-header mb-1">
+          <h5 class="modal-title" id="exampleModalLabel">
+            {{ !isEdit ? "Add Client" : "Edit Client" }}
+          </h5>
+        </div>
+        <div class="modal-body flex-grow-1 px-2">
+          <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+            <li [ngbNavItem]="1">
+              <a ngbNavLink *ngIf="isEdit">Client</a>
+              <ng-template ngbNavContent>
+                <form class="add-cpa pt-0" (ngSubmit)="(newCPAForm.form.valid)" #newCPAForm="ngForm">
+                  <div class="form-group">
+                    <label class="form-label" for="form-cpa-name">Client Name</label>
+                    <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z0-9-,.;'&/.() ]|^ /g,'')"
+                      class="form-control dt-full-name" id="form-cpa-name" placeholder="Client Name" name="cpaName"
+                      [(ngModel)]="cpaName" [class.error]="newCPAForm.submitted && FCPANameRef.invalid"
+                      #FCPANameRef="ngModel" required aria-label="Name" aria-describedby="basic-icon-default-fullname2" />
+                    <span *ngIf="newCPAForm.submitted && FCPANameRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="FCPANameRef.errors.required">This field is
+                        required!</small>
+                    </span>
+                  </div>
+                  <div class="form-group">
+                    <label for="form-address">Address</label>
+                    <input id="form-address" class="form-control"
+                      oninput="this.value = this.value.replace(/[^A-Za-z0-9-,.;'&/.() ]|^ /g,'')" name="address"
+                      [(ngModel)]="address" [class.error]="newCPAForm.submitted && FAddressRef.invalid"
+                      #FAddressRef="ngModel" required type="text" placeholder="Address" />
+                    <span *ngIf="newCPAForm.submitted && FAddressRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="FAddressRef.errors.required">This field is
+                        required!</small>
+                    </span>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="basic-icon-default-email">Email</label>
+                    <input type="text" id="basic-icon-default-email" class="form-control dt-email"
+                      placeholder="john.doe@example.com" aria-label="john.doe@example.com"
+                      aria-describedby="basic-icon-default-email2" name="email" [(ngModel)]="email" email
+                      #FEmailRef="ngModel" />
+                    <span *ngIf="newCPAForm.submitted" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="FEmailRef.errors?.email">Please enter valid email.</small>
+                    </span>
+                  </div>
+                  <div class="form-group">
+                    <label for="form-mobile-no">Mobile Number</label>
+                    <input id="form-mobile-no" class="form-control" type="text" pattern="[0-9]+" minlength="10" maxlength="12"
+                      name="mobileNo" #FMobileNoRef="ngModel" [(ngModel)]="mobileNo" placeholder="Mobile Number" />
+                    <span *ngIf="newCPAForm.submitted && FMobileNoRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="
+                        FMobileNoRef.errors.pattern ||
+                        FMobileNoRef.errors.maxlength ||
+                        FMobileNoRef.errors.minlength
+                      ">Please enter valid mobile number.</small>
+                    </span>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Type of work</label>
+                    <ng-select [items]="typeOfWorkArray" bindLabel="name" name="workType" [(ngModel)]="workType"
+                      [class.error]="newCPAForm.submitted && FWorkTypeRef.invalid" #FWorkTypeRef="ngModel" required>
+                    </ng-select>
+                    <span *ngIf="newCPAForm.submitted && FWorkTypeRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="FWorkTypeRef.errors.required">This field is
+                        required!</small>
+                    </span>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Billing Type</label>
+                    <ng-select [items]="billingTypeArray" bindLabel="name" name="billingType" [(ngModel)]="billingType"
+                      [class.error]="newCPAForm.submitted && FBilingTypeRef.invalid" #FBilingTypeRef="ngModel" required>
+                    </ng-select>
+                    <span *ngIf="newCPAForm.submitted && FBilingTypeRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="FBilingTypeRef.errors.required">This field is required!</small>
+                    </span>
+                  </div>
+                  <div class="form-group">
+                    <label for="largeInput">Contracted Hours</label>
+                    <input class="form-control" id="largeInput" type="text" pattern="[1-9][0-9]*" maxlength="5"
+                      placeholder="Contracted Hours" name="contractedHours" [(ngModel)]="contractedHours"
+                      #FContractedHoursRef="ngModel" />
+                    <span *ngIf="newCPAForm.submitted && FContractedHoursRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="FContractedHoursRef.errors.pattern">Please enter valid
+                        Contracted Hours.</small>
+                    </span>
+                  </div>
+                  <div class="form-group">
+                    <label for="internalHours">Internal Hours</label>
+                    <input class="form-control" id="internalHours" type="text" pattern="[1-9][0-9]*" maxlength="5"
+                      placeholder="Internal Hours" name="internalHours" [(ngModel)]="internalHours"
+                      #FInternalHoursRef="ngModel" />
+                    <span *ngIf="newCPAForm.submitted && FInternalHoursRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="FInternalHoursRef.errors.pattern">Please enter valid
+                        Internal Hours.</small>
+                    </span>
+                  </div>
+                  <button type="submit" class="btn btn-primary mr-1" (click)="submit(newCPAForm)" rippleEffect>
+                    {{ !isEdit ? "Add Client Now" : "Update Client Now"}}
+                  </button>
+                </form>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="2" *ngIf="isEdit">
+              <a ngbNavLink>Process</a>
+              <ng-template ngbNavContent>
+                <table class="table accounting-fix-table">
+                  <thead>
+                    <tr>
+                      <th>
+                        <input class="form-control h-auto" type="checkbox" [checked]="checkAll" id="selectAll" value="all" (change)="checkboxAllChange($event)" />
+                      </th>
+                      <th>Process</th>
+                      <th>Sub Process</th>
+                      <th>Standard Hr(s)</th>
+                      <th>Process Type</th>
+                      <th>Bill Type</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let process of processList;let i=index">
+                      <td>
+                        <input class="form-control h-auto" type="checkbox" (change)="checkboxChange(process)" [checked]="process.IsCPAmapped" id="inlineCheckbox1" value="" />
+                      </td>
+                      <td>{{process.ProcessName}}</td>
+                      <td>{{process.SubProcessName}}</td>
+                      <td>
+                        <input class="form-control" type="text" placeholder="00:00" mask="Hh:m0" name="estimatedHours"
+                          [(ngModel)]="process.estimatedDuration" [disabled]="process.isEditProcess" />
+                      </td>
+                      <td>
+                        <select class="form-control" name="processType" [(ngModel)]="process.IsProductive"
+                          [disabled]="process.isEditProcess" id="processType">
+                          <option [value]="">Select Type</option>
+                          <option [value]="1">Productive</option>
+                          <option [value]="0">Non-Productive</option>
+                        </select>
+                      </td>
+                      <td>
+                        <select class="form-control" name="billType" [(ngModel)]="process.IsBillable"
+                          [disabled]="process.isEditProcess" id="billType">
+                          <option [value]="">Select Type</option>
+                          <option [value]="1">Billable</option>
+                          <option [value]="0">Non-Billable</option>
+                        </select>
+                      </td>
+                      <td class="d-flex justify-content-end">
+                        <button class="btn btn-icon btn-tms-secondary mr-1 btn-tms-theme" rippleEffect
+                          (click)="editData(process)">
+                          <span [data-feather]="'edit'"></span>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr *ngIf="length == 0">
+                      No records found!
+                    </tr>
+                  </tbody>
+                </table>
+                <button type="submit" class="btn btn-primary mr-1" (click)="submitProcess(processList)" rippleEffect>
+                  {{ !isEdit ? "Add Process Now" : "Update Process Now"}}
+                </button>
+              </ng-template>
+            </li>
+          </ul>
+          <div [ngbNavOutlet]="nav" [ngClass]="isEdit ? 'mt-2' : ''"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<block-ui> </block-ui>

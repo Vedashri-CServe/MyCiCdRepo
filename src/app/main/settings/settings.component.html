@@ -1,0 +1,65 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <!-- User List -->
+        <section class="users-list-wrapper">
+            <div class="card">
+                <!-- Basic tabs start -->
+                <section id="basic-tabs-components">
+                    <div class="row match-height">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card-body" *ngIf="subMenu">
+                                <ul ngbNav #nav="ngbNav" class="nav-tabs">
+                                    <li ngbNavItem *ngIf="subMenu[0]?.IsShow">
+                                        <a ngbNavLink>{{subMenu[0]?.DisplayName}}</a>
+                                        <ng-template ngbNavContent>
+                                            <app-cpa></app-cpa>
+                                        </ng-template>
+                                    </li>
+                                    <li ngbNavItem *ngIf="subMenu[1]?.IsShow">
+                                        <a ngbNavLink>{{subMenu[1]?.DisplayName}}</a>
+                                        <ng-template ngbNavContent>
+                                            <app-client></app-client>
+                                        </ng-template>
+                                    </li>
+                                    <li ngbNavItem *ngIf="subMenu[2]?.IsShow">
+                                        <a ngbNavLink>{{subMenu[2]?.DisplayName}}</a>
+                                        <ng-template ngbNavContent>
+                                            <app-user></app-user>
+                                        </ng-template>
+                                    </li>
+                                    <li ngbNavItem *ngIf="subMenu[3]?.IsShow">
+                                        <a ngbNavLink>{{subMenu[3]?.DisplayName}}</a>
+                                        <ng-template ngbNavContent>
+                                            <app-task></app-task>
+                                        </ng-template>
+                                    </li>
+                                    <li ngbNavItem *ngIf="subMenu[4]?.IsShow">
+                                        <a ngbNavLink>{{subMenu[4]?.DisplayName}}</a>
+                                        <ng-template ngbNavContent>
+                                            <app-process></app-process>
+                                        </ng-template>
+                                    </li>
+                                    <li ngbNavItem *ngIf="subMenu[5]?.IsShow">
+                                        <a ngbNavLink>{{subMenu[5]?.DisplayName}}</a>
+                                        <ng-template ngbNavContent>
+                                            <app-status></app-status>
+                                        </ng-template>
+                                    </li>
+                                    <li ngbNavItem *ngIf="data.RoleTypeIds[0] == 1 || data.RoleTypeIds[0] == 2">
+                                        <a ngbNavLink>Permission</a>
+                                        <ng-template ngbNavContent>
+                                            <app-permission></app-permission>
+                                        </ng-template>
+                                    </li>
+                                </ul>
+                                <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Basic Tag Input end -->
+            </div>
+        </section>
+        <!--/ User List -->
+    </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="row">
+  <!-- <div class="col-md-6 col-12">
+    <div class="d-flex justify-content-between align-items-center m-1">
+      <label class="d-flex align-items-center">Show
+        <select class="form-control mx-25" [(ngModel)]="selectedOption">
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+        entries</label>
+    </div>
+  </div> -->
+  <!-- <div class="col-md-6 col-12 d-flex justify-content-start justify-content-md-end">
+    <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pb-md-0">
+      <label class="d-flex align-items-center ml-1 ml-md-0">Search<input [(ngModel)]="searchValue" name="searchValue"
+          type="search" class="form-control ml-25" (keyup)="filterUpdate($event)"
+          (search)="filterUpdate($event)" /></label>
+      </div>
+  </div> -->
+</div>
+<smart-scheduler #scheduler id="scheduler" [dataSource]="dataSource" [view]="view"
+   [groupOrientation]="groupOrientation" (onDateChange)="handleSchedulerEvent($event)" [groups]="groups" [resources]="resources" [dataSource]="dataSource" ></smart-scheduler>
+<!-- <ngx-datatable [rows]="rows" [rowHeight]="'auto'" class="bootstrap core-bootstrap" [limit]="selectedOption"
+  [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true">
+  <ngx-datatable-column name="User" prop="username" [width]="120" [resizeable]="false">
+    <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+      <span>{{ row.UserName }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+   <ngx-datatable-column name="End Time" [width]="120" [resizeable]="false">
+    <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+      <span>{{ row?.DateTimeLogs[0]?.DayEndTime }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+ <ngx-datatable-column *ngFor="let col of timeArray" [name]="col" [resizeable]="false" [sortable]="false">
+    <ngx-datatable [rows]="rows" [rowHeight]="'auto'" class="bootstrap core-bootstrap" [limit]="selectedOption"
+      [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true">
+      <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
+        
+        <div class="w-100 h-100" *ngIf="tConvert(row?.DateTimeLogs[0]?.DayStartTime) == col">
+          <div class="w-100 bg-success h-100"></div>
+        </div>
+      </ng-template>
+    </ngx-datatable>
+  </ngx-datatable-column> 
+</ngx-datatable> -->
+<block-ui> </block-ui>

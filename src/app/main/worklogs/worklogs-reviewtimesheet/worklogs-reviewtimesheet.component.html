@@ -1,0 +1,129 @@
+<div class="row mb-1">
+    <div class="col-md-3 col-12 d-flex justify-content-between align-items-center">
+        <label class="d-flex align-items-center">Show
+            <select class="form-control mx-25" [(ngModel)]="selectedOption" (change)="selectDropdown(selectedOption)">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </label>
+    </div>
+    <div class="col-md-9 col-12">
+        <form class="form review-form">
+            <div class="form-group d-flex align-items-center mb-0">
+                <div class="input-group w-50">
+                    <ng-select placeholder="Select user" #selectMultiLimited="ngModel" class="w-100"
+                        [items]="userListData" [multiple]="true" bindLabel="name"
+                        [(ngModel)]="selectMultiLimitedSelected" [ngModelOptions]="{standalone: true}" required>
+                        <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                            <span class="ng-value-label"> {{ item.name }}</span>
+                            <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+                        </ng-template>
+                    </ng-select>
+                </div>
+                <div class="input-group ml-1 w-50">
+                    <select class="form-control" (change)="changeStatus($event)">
+                        <option value="" style="color: #999;">Select status</option>
+                        <option [value]="status.Value" style="color: black;" *ngFor="let status of statusArray">
+                            {{status.Label}}</option>
+                    </select>
+                </div>
+                <div class="input-group w-50 ml-1">
+                    <input class="form-control" placeholder="{{basicDPdata}}" [maxDate]="maxtodayDate" name="selectDate"
+                        [(ngModel)]="basicDPdata" ngbDatepicker #basicDP="ngbDatepicker" readonly />
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary feather icon-calendar" (click)="basicDP.toggle()"
+                            type="button" rippleEffect></button>
+                    </div>
+                </div>
+                <button class="btn btn-primary ml-1 round w-25"
+                    (click)="searchData(basicDPdata,selectMultiLimitedSelected)" rippleEffect [disabled]="!basicDPdata">
+                    <i data-feather="plus" class="d-block d-sm-none mr-0 mr-sm-1"></i>
+                    <span class="d-none d-sm-inline-block">Search</span>
+                </button>
+                <a class="btn btn-outline-secondary d-flex ml-1 mb-0 iconExport" ngbTooltip="Export"
+                    (click)="exportReport()" rippleEffect><span [data-feather]="'download'"></span></a>
+            </div>
+        </form>
+    </div>
+</div>
+<ngx-datatable [rows]="rows" [rowHeight]="50" class="bootstrap core-bootstrap" [limit]="selectedOption"
+    [columnMode]="ColumnMode.force" [limit]="selectedOption" [offset]="Number" [count]="totalElements"
+    [externalPaging]="true" (page)="setPage($event)" [headerHeight]="50" [selected]="selected"
+    [displayCheck]="displayCheck" [selectionType]="SelectionType.checkbox" [selectAllRowsOnPage]="false"
+    (select)="onSelect($event)" [footerHeight]="50" [scrollbarH]="true">
+    <ngx-datatable-column [width]="30" [sortable]="false" [canAutoResize]="false" [draggable]="false" [headerCheckboxable]="headerCheckboxable" [checkboxable]="true"></ngx-datatable-column>
+    <ngx-datatable-column name="Employee Name" prop="EmployeeName" [width]="120"></ngx-datatable-column>
+    <ngx-datatable-column name="Designation" prop="RoleType" [width]="120"></ngx-datatable-column>
+    <ngx-datatable-column name="Reporting Manager" prop="ReviewerName" [width]="120"></ngx-datatable-column>
+    <ngx-datatable-column name="Start Date & Time" prop="startDateTime" [width]="120"></ngx-datatable-column>
+    <ngx-datatable-column name="End Date & Time" prop="endDateTime" [width]="120"></ngx-datatable-column>
+    <ngx-datatable-column name="Client" prop="CPAName" [width]="100"></ngx-datatable-column>
+    <ngx-datatable-column name="Project" prop="ClientName" [width]="120"></ngx-datatable-column>
+    <ngx-datatable-column name="Task/Process" prop="taskName" [width]="120">
+        <ng-template ngx-datatable-cell-template let-row="row">
+            <div container="body" class="d-flex justify-content-between refresh-box-design">
+                <span [title]="row.taskName"> {{row.taskName}}</span>
+            </div>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Sub Process" prop="SubprocessName" [width]="120"></ngx-datatable-column>
+    <ngx-datatable-column name="Is Manual" prop="isManual" [width]="120"></ngx-datatable-column>
+    <ngx-datatable-column name="QTY" prop="Quantity" [width]="80"></ngx-datatable-column>
+    <ngx-datatable-column name="Std Hours" prop="totalTime" [width]="120"></ngx-datatable-column>
+    <ngx-datatable-column name="Total Hours" prop="EventDuration" [width]="120"></ngx-datatable-column>
+    <ngx-datatable-column name="Edit Hours" prop="ModifiedHours" [width]="120"></ngx-datatable-column>
+    <ngx-datatable-column name="Task Status" prop="ApprovalStatus" [width]="150"></ngx-datatable-column>
+    <ngx-datatable-column name="Efficiency" prop="Efficiency" [width]="120"></ngx-datatable-column>
+    <ngx-datatable-column name="Description" prop="Description" [width]="120"></ngx-datatable-column>
+    <ngx-datatable-column name="Reason" prop="Reason" [width]="120"></ngx-datatable-column>
+    <ngx-datatable-column name="Created Date" prop="createddate" [width]="120"></ngx-datatable-column>
+    <ngx-datatable-column name="Submitted Date" prop="submitteddate" [width]="150"></ngx-datatable-column>
+    <ngx-datatable-column name="EST" prop="estimatedDuration" [width]="120"></ngx-datatable-column>
+    <ngx-datatable-column name="Status" prop="StatusName" [width]="120"> </ngx-datatable-column>
+    <ngx-datatable-column name="Actions" [width]="80" [sortable]="false" *ngIf="subMenu.IsUpdate">
+        <ng-template ngx-datatable-cell-template let-row="row">
+            <div ngbDropdown container="body" class="d-flex">
+                <button class="btn btn-icon btn-tms-secondary mr-1 btn-tms-theme" ngbTooltip="Edit" placement="left"
+                    rippleEffect (click)="toggleSidebar('worklogs-daily-sidebar','Edit',row)"
+                    [disabled]="row.isEdit">
+                    <span [data-feather]="'edit'"></span>
+                </button>
+            </div>
+        </ng-template>
+    </ngx-datatable-column>
+</ngx-datatable>
+<div class="row mb-1">
+    <div class="col-md-1 col-12 d-flex justify-content-between align-items-center"></div>
+    <div class="col-md-3 col-12" style="max-width:20% !important;">
+        <label class="text-primary"><strong>Total STD Hours : {{TotalStdHours}} </strong> </label>
+    </div>
+    <div class="col-md-2 col-12 d-flex justify-content-between align-items-center">
+        <label class="text-primary"><strong>Total Time : {{totalTime}} </strong> </label>
+    </div>
+    <div class="col-md-3 col-12">
+        <label class="text-primary"><strong>Total Edit Time : {{TotalModifiedHours}} </strong> </label>
+    </div>
+    <div class="col-md-2 col-12">
+        <label class="text-primary"><strong>Total QTY : {{TotalQty}} </strong> </label>
+    </div>
+    <div class="col-md-1 col-12 d-flex justify-content-between align-items-center"></div>
+</div>
+<div *ngIf="isShowButton">
+    <button class="btn btn-primary ml-1 round" rippleEffect (click)="saveWorkplan()">
+        <i data-feather="plus" class="d-sm-none d-inline-block mr-0 mr-sm-1"></i>
+        <span class="d-none d-sm-inline-block">ACCEPT</span>
+    </button>
+    <button class="btn btn-danger ml-1 round" rippleEffect (click)="rejectWorkPlan()">
+        <i data-feather="plus" class="d-sm-none d-inline-block mr-0 mr-sm-1"></i>
+        <span class="d-none d-sm-inline-block">REJECT</span>
+    </button>
+</div>
+<!-- New Worklogs Sidebar -->
+<core-sidebar class="modal modal-slide-in sidebar-todo-modal fade" name="worklogs-timesheet-sidebar"
+    overlayClass="modal-backdrop">
+    <app-worklogs-daily-sidebar></app-worklogs-daily-sidebar>
+</core-sidebar>
+<!--/ New Worklogs Sidebar -->
+<block-ui> </block-ui>

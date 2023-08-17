@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-md-4 col-12">
+    <div class="d-flex justify-content-between align-items-center m-1">
+      <label class="d-flex align-items-center">Show
+        <select class="form-control mx-25" [(ngModel)]="selectedOption">
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+        </label>
+    </div>
+  </div>
+  <div class="col-md-8 col-12 d-flex justify-content-start justify-content-md-end">
+    <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pb-md-0">
+      <label class="d-flex align-items-center ml-1 ml-md-0">Search <input [(ngModel)]="searchValue" name="searchValue"
+          type="search" class="form-control ml-25" (keyup)="filterUpdate($event)"
+          (search)="filterUpdate($event)" /></label>
+      <button class="btn btn-primary ml-1 round"  *ngIf="subMenu.IsAdd"  rippleEffect (click)="toggleSidebar('add-status','Add','data')">
+        <i data-feather="plus" class="d-sm-none d-inline-block mr-0 mr-sm-1"></i><span
+          class="d-none d-sm-inline-block">Add {{subMenu.DisplayName}}</span>
+      </button>
+    </div>
+  </div>
+</div>
+<ngx-datatable [rows]="rows" [rowHeight]="50" class="bootstrap core-bootstrap" [limit]="selectedOption"
+  [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true">
+  <ngx-datatable-column name="Status Name" prop="StatusName" [resizeable]="true"></ngx-datatable-column>
+  <ngx-datatable-column name="Color" [resizeable]="true" [sortable]="false">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <span class="round p-1 color-font-none" [style.background]="row.Color"></span>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Actions" [sortable]="false" [resizeable]="false"  *ngIf="subMenu.IsUpdate || subMenu.IsDelete"> 
+    <ng-template ngx-datatable-cell-template let-row="row"> 
+      <div ngbDropdown container="body">
+        <button *ngIf="subMenu.IsUpdate" class="btn btn-icon btn-tms-secondary mr-1 btn-tms-theme" ngbTooltip="Edit" placement="left" rippleEffect
+          (click)="toggleSidebar('add-status','Edit',row)">
+          <span [data-feather]="'edit'"></span>
+        </button>
+        <button *ngIf="subMenu.IsDelete" class="btn btn-icon btn-tms-secondary btn-tms-delete" ngbTooltip="Delete" placement="left" [swal]="SweetAlertConfirmText" rippleEffect>
+          <span [data-feather]="'trash-2'"></span>
+        </button>
+        <swal #SweetAlertConfirmText (open)="ConfirmTextOpen(row)"></swal>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>
+
+<!-- Add Status Sidebar -->
+<core-sidebar class="modal modal-slide-in sidebar-todo-modal fade" name="add-status" overlayClass="modal-backdrop">
+  <app-add-status></app-add-status>
+</core-sidebar>
+<!--/ Add Status Sidebar -->
+<block-ui> </block-ui>

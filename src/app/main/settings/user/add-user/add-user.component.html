@@ -1,0 +1,126 @@
+<div class="slideout-content">
+  <!-- Modal to add new user starts-->
+  <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+    <div class="modal-dialog">
+      <form class="add-new-user modal-content pt-0" (ngSubmit)="(newUserForm.form.valid)" #newUserForm="ngForm">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="toggleSidebar('add-user')">
+          ×
+        </button>
+        <div class="modal-header mb-1">
+          <h5 class="modal-title" id="exampleModalLabel">{{!isEdit ? 'Add User' : 'Edit User'}}</h5>
+        </div>
+        <div class="modal-body flex-grow-1 px-3">
+          <div class="form-group mb-2">
+            <label class="form-label">Select Client</label>
+            <ng-select #selectMultiLimited="ngModel" [items]="cpaList" [multiple]="true" bindLabel="name"
+              [(ngModel)]="selectMultiLimitedSelected" [ngModelOptions]="{standalone: true}" [closeOnSelect]="false"
+              required>
+              <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                <span class="ng-value-label"> {{ item.name }}</span>
+                <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+              </ng-template>
+            </ng-select>
+            <span *ngIf="newUserForm.submitted " class="invalid-form">
+              <small class="form-text text-danger" *ngIf="selectMultiLimitedSelected.length == 0">This field is
+                required!</small>
+            </span>
+          </div>
+          <div class="form-group">
+            <label>First Name</label>
+            <input class="form-control" id="form-firstname" type="text"
+              oninput="this.value = this.value.replace(/[^A-Za-z-,.;'&/.() ]|^ /g,'')" placeholder="First Name"
+              name="firstName" [(ngModel)]="firstName" [class.error]="newUserForm.submitted && FFirstNameRef.invalid"
+              #FFirstNameRef="ngModel" required />
+            <span *ngIf="newUserForm.submitted && FFirstNameRef.invalid" class="invalid-form">
+              <small class="form-text text-danger" *ngIf="FFirstNameRef.errors.required">This field is required!</small>
+            </span>
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input class="form-control" type="text"
+              oninput="this.value = this.value.replace(/[^A-Za-z-,.;'&/.() ]|^ /g,'')" placeholder="Last Name"
+              name="lastName" [(ngModel)]="lastName" [class.error]="newUserForm.submitted && FLastNameRef.invalid"
+              #FLastNameRef="ngModel" required />
+            <span *ngIf="newUserForm.submitted && FLastNameRef.invalid" class="invalid-form">
+              <small class="form-text text-danger" *ngIf="FLastNameRef.errors.required">This field is required!</small>
+            </span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="basic-icon-default-email">Email</label>
+            <input type="text" id="basic-icon-default-email" class="form-control dt-email" email
+              placeholder="john.doe@example.com" aria-label="john.doe@example.com"
+              aria-describedby="basic-icon-default-email2" name="email" [(ngModel)]="email"
+              [class.error]="newUserForm.submitted && FEmailRef.invalid" #FEmailRef="ngModel" required />
+            <span *ngIf="newUserForm.submitted && FEmailRef.invalid" class="invalid-form">
+              <small class="form-text text-danger" *ngIf="FEmailRef.errors.required">This field is required!</small>
+              <small class="form-text text-danger" *ngIf="FEmailRef.errors.email">Please enter valid email.</small>
+            </span>
+          </div>
+          <div class="form-group">
+            <label>Mobile Number</label>
+            <input type="text" name="mobileNo" class="form-control" [(ngModel)]="mobileNo"
+              pattern="^[0-9]*$" maxlength="15" minlength="10" placeholder="Mobile Number" ngModel
+              #FMobileNoRef="ngModel" />
+            <span *ngIf="newUserForm.submitted && FMobileNoRef.invalid" class="invalid-form">
+              <small class="form-text text-danger"
+                *ngIf="FMobileNoRef.errors.pattern || FMobileNoRef.errors.maxlength || FMobileNoRef.errors.minlength">
+                Please enter valid mobile number.</small>
+            </span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">User Type</label>
+            <select id="form-user-type" class="form-control" name="userType" [(ngModel)]="userType"
+              [class.error]="newUserForm.submitted && FUserTypeRef.invalid" #FUserTypeRef="ngModel" required>
+              <option value="" selected>Please select user type</option>
+              <option [value]="user.Value" *ngFor="let user of userTypeList">{{user.Label}}</option>
+            </select>
+            <span *ngIf="newUserForm.submitted && FUserTypeRef.invalid" class="invalid-form">
+              <small class="form-text text-danger" *ngIf="FUserTypeRef.errors.required">This field is required!</small>
+            </span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Work Category</label>
+            <select class="form-control" name="workCategory" [(ngModel)]="workCategory"
+              [class.error]="newUserForm.submitted && FWorkCategory.invalid" #FWorkCategory="ngModel" required>
+              <option value="" selected>Please select user type</option>
+              <option value="31">Task</option>
+              <option value="32">Processes</option>
+              <option value="33">Both</option>
+            </select>
+            <span *ngIf="newUserForm.submitted && FWorkCategory.invalid" class="invalid-form">
+              <small class="form-text text-danger" *ngIf="FWorkCategory.errors.required">This field is required!</small>
+            </span>
+          </div>
+          <div class="form-group mb-2">
+            <label class="form-label">Department</label>
+            <select class="form-control" name="department" [(ngModel)]="department"
+              [class.error]="newUserForm.submitted && FDepartmentRef.invalid" #FDepartmentRef="ngModel" required>
+              <option value="">Please select department</option>
+              <option *ngFor="let user of userDepartment" [value]="user.Value">{{user.Label}}</option>
+            </select>
+            <span *ngIf="newUserForm.submitted && FDepartmentRef.invalid" class="invalid-form">
+              <small class="form-text text-danger" *ngIf="FDepartmentRef.errors.required">This field is
+                required!</small>
+            </span>
+          </div>
+          <div class="form-group mb-2">
+            <label class="form-label">Reporting Manager</label>
+            <ng-select [items]="userListData" bindLabel="name" [loading]="selectBasicLoading" name="reportingManager"
+              [(ngModel)]="reportingManager" [class.error]="newUserForm.submitted && FReportingManager.invalid" required
+              #FReportingManager="ngModel"> </ng-select>
+            <span *ngIf="newUserForm.submitted && FReportingManager.invalid" class="invalid-form">
+              <small class="form-text text-danger" *ngIf="FReportingManager.errors.required">This field is
+                required!</small>
+            </span>
+          </div>
+          <button type="submit" class="btn btn-primary mr-1" (click)="submit(newUserForm)" rippleEffect>
+            {{!isEdit ? 'Add User Now':'Update User Now'}}
+          </button>
+          <button type="reset" class="btn btn-outline-secondary" (click)="toggleSidebar('add-user')" rippleEffect>
+            Cancel </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<block-ui> </block-ui>

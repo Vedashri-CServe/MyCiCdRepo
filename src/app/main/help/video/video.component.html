@@ -1,0 +1,18 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-4" *ngFor="let file of files; let i = index">
+          <div
+            plyr
+            plyrTitle="Video"
+            [plyrPlaysInline]="true"
+            [plyrSources]="file.obj"
+            [plyrOptions]="plyrOptions"
+          ></div>
+          <label>{{file.FileName}}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

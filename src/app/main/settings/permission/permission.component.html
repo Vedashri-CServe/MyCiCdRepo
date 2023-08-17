@@ -1,0 +1,230 @@
+<div class="row pb-2">
+  <div class="col-md-6"></div>
+  <div class="d-flex col-md-6">
+    <ng-select class="w-75" placeholder="Select role" [items]="userTypeList" bindLabel="name" name="roleData"
+      [(ngModel)]="roleData" (change)="filterByRoleBase(roleData)"></ng-select>
+    <button class="btn btn-primary round ml-2 text-nowrap w-25"  rippleEffect (click)="toggleSidebar(modelOpenRole)">
+      <i data-feather="plus" class="d-sm-none d-inline-block mr-0 mr-sm-1"></i><span
+        class="d-none d-sm-inline-block">Add Role</span>
+    </button>
+  </div>
+</div>
+<div class="row pb-2" *ngIf="searchId">
+  <div class="col-md-6"></div>
+  <div class="col-md-6">
+    <div class="d-flex">
+      <div class="d-flex flex-column w-75">
+        <input type="text"  oninput="this.value = this.value.replace(/[^A-Za-z0-9-,.;'&/.() ]|^ /g,'')" class="w-100 form-control dt-email" name="label" [(ngModel)]="selectedData.Label" />
+      </div>
+      <span *ngIf="selectedData.Label == ''" class="invalid-form">
+        <small class="form-text text-danger">This filed is required.</small>
+      </span>
+      <div class="d-flex align-items-center justify-content-start ml-2 w-25">
+        <button class="btn btn-icon btn-tms-secondary mr-1 btn-tms-theme" [disabled]="selectedData.Label == ''"  ngbTooltip="Update" placement="left"
+          rippleEffect (click)="editRole(selectedData)">
+          <span [data-feather]="'edit'"></span>
+        </button>
+        <button class="btn btn-icon btn-tms-secondary btn-tms-delete" [disabled]="selectedData.Label == ''"  [swal]="SweetAlertConfirmStatus"
+          ngbTooltip="Delete" placement="left" [swal]="SweetAlertConfirmText" rippleEffect>
+          <span [data-feather]="'trash-2'"></span>
+        </button>
+        <swal #SweetAlertConfirmStatus (open)="deleteRole(selectedData)"></swal>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-datatable #tableRowDetails [rows]="rows" [rowHeight]="50" class="bootstrap core-bootstrap" [limit]="selectedOption"
+  [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true">
+  <ngx-datatable-column [width]="40" [resizeable]="false" [sortable]="false" [draggable]="false"
+    [canAutoResize]="false">
+    <ng-template let-row="row" let-expanded="row.expanded" ngx-datatable-cell-template>
+      <a href="javascript:void(0)" [class.datatable-icon-right]="!row.expanded" title="Expand/Collapse Row"
+        (click)="rowDetailsToggleExpand(row)">
+      </a>
+      <a href="javascript:void(0)" [class.datatable-icon-down]="row.expanded" title="Expand/Collapse Row"
+        (click)="closeRow(row)">
+      </a>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Default Name" prop="DefaultName" [sortable]="false" [resizeable]="false"
+    [width]="120"></ngx-datatable-column>
+  <ngx-datatable-column name="Display Name" prop="DisplayName" [sortable]="false" [resizeable]="false"
+    [width]="110"></ngx-datatable-column>
+  <!-- <ngx-datatable-column name="" [sortable]="false" [resizeable]="false" [width]="90">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <div ngbDropdown container="body">
+        <button class="btn btn-icon btn-tms-secondary mr-1 btn-tms-theme" ngbTooltip="Edit" placement="left"
+          rippleEffect (click)="OpenModel(modelOpen,row)">
+          <span [data-feather]="'edit'"></span>
+        </button>
+      </div>
+    </ng-template>
+  </ngx-datatable-column> -->
+  <ngx-datatable-column name="Show/Hide" prop="" [sortable]="false" [resizeable]="true" [width]="90">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <div class="custom-control custom-control-primary custom-switch">
+        <input type="checkbox" class="custom-control-input" id="{{ row.customShow }}"
+          (change)="isChangeLimitAccessToggle(row, 'Show')" [checked]="row.IsShow" />
+        <label class="custom-control-label" for="{{ row.customShow }}"></label>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Add" prop="isMainMenu" [sortable]="false" [resizeable]="false"
+    [width]="50"></ngx-datatable-column>
+  <ngx-datatable-column name="Update" prop="isMainMenu" [sortable]="false" [resizeable]="false" [width]="90"></ngx-datatable-column>
+  <ngx-datatable-column name="Delete" prop="isMainMenu" [sortable]="false" [resizeable]="false" [width]="90"></ngx-datatable-column>
+  <ngx-datatable-column name="Active" prop="isMainMenu" [sortable]="false" [resizeable]="false" [width]="90">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <div class="custom-control custom-control-primary custom-switch">
+        <input type="checkbox" class="custom-control-input" id="{{ row.customActive }}"
+          (change)="isChangeLimitAccessToggle(row, 'Active')" [checked]="row.IsActive" />
+        <label class="custom-control-label" for="{{ row.customActive }}"></label>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+  <!-- <ngx-datatable-column name="isHome Page" prop="estimatedDuration" [sortable]="false" [resizeable]="false" [width]="110">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <div class="custom-control custom-control-primary custom-switch">
+        <input type="checkbox" class="custom-control-input" id="{{row.customhomePage}}"
+          (change)="isChangeLimitAccessToggle(row,'Homepage')" [checked]="row.IsDefaultLandingPage" />
+        <label class="custom-control-label" for="{{row.customhomePage}}"></label>
+      </div>
+    </ng-template>
+  </ngx-datatable-column> -->
+  <ngx-datatable-column class="w-100" [sortable]="false">
+    <ngx-datatable-row-detail [rowHeight]="'auto'" class="w-100">
+      <ng-template let-row="row" let-expanded="row.expanded" ngx-datatable-row-detail-template class="w-100">
+        <ngx-datatable [rows]="rowData" [rowHeight]="50" class="bootstrap core-bootstrap" [headerHeight]="0"
+          [footerHeight]="0" [scrollbarH]="true" [columnMode]="ColumnMode.force">
+          <ngx-datatable-column name="" [resizeable]="false" [width]="40"></ngx-datatable-column>
+          <ngx-datatable-column name="" prop="DefaultName" [resizeable]="false" [width]="80"></ngx-datatable-column>
+          <ngx-datatable-column name="" prop="DisplayName" [resizeable]="false" [width]="90"></ngx-datatable-column>
+          <!-- <ngx-datatable-column name="" [sortable]="false" [resizeable]="false" [width]="85">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              <div ngbDropdown container="body">
+                <button class="btn btn-icon btn-tms-secondary mr-1 btn-tms-theme" ngbTooltip="Edit" placement="left"
+                  rippleEffect (click)="OpenModel(modelOpen,row)">
+                  <span [data-feather]="'edit'"></span>
+                </button>
+              </div>
+            </ng-template>
+          </ngx-datatable-column> -->
+          <ngx-datatable-column [resizeable]="false" [width]="70">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              <div class="custom-control custom-control-primary custom-switch">
+                <input type="checkbox" class="custom-control-input" id="{{ row.customSubShow }}"
+                  (change)="isChangeLimitAccessToggle(row, 'Show')" [checked]="row.IsShow" />
+                <label class="custom-control-label" for="{{ row.customSubShow }}"></label>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column [resizeable]="false" [width]="70">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              <div class="custom-control custom-control-primary custom-switch">
+                <input type="checkbox" class="custom-control-input" id="{{ row.customSubAdd }}"
+                  (change)="isChangeLimitAccessToggle(row, 'Add')" [checked]="row.IsAdd" />
+                <label class="custom-control-label" for="{{ row.customSubAdd }}"></label>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column [resizeable]="false" [width]="80">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              <div class="custom-control custom-control-primary custom-switch">
+                <input type="checkbox" class="custom-control-input" id="{{ row.customSubUpdate }}"
+                  (change)="isChangeLimitAccessToggle(row, 'Update')" [checked]="row.IsUpdate" />
+                <label class="custom-control-label" for="{{ row.customSubUpdate }}"></label>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column [resizeable]="false" [width]="80">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              <div class="custom-control custom-control-primary custom-switch">
+                <input type="checkbox" class="custom-control-input" id="{{ row.customSubDelete }}"
+                  (change)="isChangeLimitAccessToggle(row, 'Delete')" [checked]="row.IsDelete" />
+                <label class="custom-control-label" for="{{ row.customSubDelete }}"></label>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column [resizeable]="false" [width]="80">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              <div class="custom-control custom-control-primary custom-switch">
+                <input type="checkbox" class="custom-control-input" id="{{ row.customSubActive }}"
+                  (change)="isChangeLimitAccessToggle(row, 'Active')" [checked]="row.IsActive" />
+                <label class="custom-control-label" for="{{ row.customSubActive }}"></label>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <!-- <ngx-datatable-column [resizeable]="false" [width]="80">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              <div class="custom-control custom-control-primary custom-switch">
+                <input type="checkbox" class="custom-control-input" id="{{row.customSubhomePage}}"
+                  (change)="isChangeLimitAccessToggle(row,'Homepage')" [checked]="row.IsDefaultLandingPage" />
+                <label class="custom-control-label" for="{{row.customSubhomePage}}"></label>
+              </div>
+            </ng-template>
+          </ngx-datatable-column> -->
+          <ngx-datatable-column [resizeable]="false" [width]="80"></ngx-datatable-column>
+        </ngx-datatable>
+      </ng-template>
+    </ngx-datatable-row-detail>
+  </ngx-datatable-column>
+</ngx-datatable>
+<ng-template #modelOpen let-modal>
+  <div class="modal-header">
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body workstopmodel text-dark" tabindex="0" ngbAutofocus>
+    <div class="p-1">
+      <p for="basicTextarea"><strong>Disaply Name</strong></p>
+      <fieldset class="form-group mb-0">
+        <input class="form-control" type="text" placeholder="Disaply Name" name="disaplyName"
+          oninput="this.value = this.value.replace(/[^A-Za-z0-9-,.;'&/.() ]|^ /g,'')" [(ngModel)]="disaplyName" />
+      </fieldset>
+    </div>
+    <div class="form-group d-flex justify-content-end">
+      <button type="button" rippleeffect class="btn btn-primary mr-1 waves-effect waves-float waves-light round mt-1"
+        (click)="SubmitData()" [disabled]="!disaplyName" aria-label="Close">
+        Save
+      </button>
+      <button type="button" rippleeffect (click)="modal.dismiss('Cross click')"
+        class="btn btn-outline-primary mr-1 waves-effect waves-float waves-light round mt-1">
+        Cancel
+      </button>
+    </div>
+  </div>
+</ng-template>
+<ng-template #modelOpenRole let-modal>
+  <div class="modal-header">
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body workstopmodel text-dark" tabindex="0" ngbAutofocus>
+    <div class="p-1">
+      <p for="basicTextarea"><strong>Role Name</strong></p>
+      <fieldset class="form-group mb-0">
+        <input class="form-control" type="text"
+          oninput="this.value = this.value.replace(/[^A-Za-z0-9-,.;'&/.() ]|^ /g,'')" placeholder="Role Name"
+          name="roleName" [(ngModel)]="roleName" />
+      </fieldset>
+    </div>
+    <div class="form-group d-flex justify-content-end">
+      <button type="button" rippleeffect class="btn btn-primary mr-1 waves-effect waves-float waves-light round mt-1"
+        (click)="SubmitRole()" [disabled]="!roleName" aria-label="Close">
+        Save
+      </button>
+      <button type="button" rippleeffect (click)="modal.dismiss('Cross click')"
+        class="btn btn-outline-primary mr-1 waves-effect waves-float waves-light round mt-1">
+        Cancel
+      </button>
+    </div>
+  </div>
+</ng-template>
+<block-ui> </block-ui>
+<style>
+  span.ng-clear-wrapper.ng-star-inserted {
+    display: none;
+  }
+</style>
