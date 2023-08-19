@@ -45,3 +45,16 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
+      - name: Push code to check_sonar branch
+        run: |
+          git checkout check_sonar
+          git add .
+          git commit -m "Code for Sonar Check"
+          git push origin check_sonar
+        
+      - name: Create Pull Request
+        uses: Vedashri-CServe/create-pull-request@v3
+        with:
+          token: ${{ secrets.CSERVE_TOKEN }} 
+          branch: check_sonar    
+
