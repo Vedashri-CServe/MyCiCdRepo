@@ -50,20 +50,23 @@ jobs:
 
       - name: Fetch remote branches
         run: git fetch origin    
-        
-      # - name: Stash changes
-      #   run: git stash
+    #------------------------    
+      - name: Overwrite Files and Folders
+        run: |
+          cp -r check_sonar/ backup_branch/
+          # Remove existing files and folders in the target branch
+          git rm -r check_sonar/
+          git commit -m "Remove existing files and folders" -a
 
-      # - name: Switch to check_sonar branch
-      #   run: |
-      #     git checkout check_sonar
-      #     git stash pop
-          
+          # Copy files and folders from source branch to target branch
+          # cp -r source_folder/ target_folder/
+     #----------------------------------------------     
       - name: Push code to check_sonar branch
         run: |
           git config --global user.name Vedashri-CServe
           git config --global user.email vedashri@cloudservesystems.com
           git checkout check_sonar
+         
           git add .
           git commit -m "Code for Sonar Check"
           git push origin check_sonar
