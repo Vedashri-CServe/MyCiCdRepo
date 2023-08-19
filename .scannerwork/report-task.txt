@@ -1,0 +1,6 @@
+projectKey=Node_Tms
+serverUrl=https://sonar.pathquest.com:9000
+serverVersion=10.0.0.68432
+dashboardUrl=https://sonar.pathquest.com:9000/dashboard?id=Node_Tms
+ceTaskId=AYoNLGKWWOhZBcKgugYh
+ceTaskUrl=https://sonar.pathquest.com:9000/api/ce/task?id=AYoNLGKWWOhZBcKgugYh
