@@ -50,6 +50,8 @@ jobs:
 
       - name: Push code to check_sonar branch
         run: |
+          git config --global user.name Vedashri-CServe
+          git config --global user.email vedashri@cloudservesystems.com
           git checkout check_sonar
           git add .
           git commit -m "Code for Sonar Check"
