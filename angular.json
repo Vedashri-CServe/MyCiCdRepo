@@ -202,4 +202,5 @@
   "cli": {
     "analytics": false
   }
+  "test": "test"  // comments are not allowed and invalid
 }
