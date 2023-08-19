@@ -60,9 +60,9 @@ jobs:
           git commit -m "Code for Sonar Check"
           git push origin check_sonar
         
-      - name: Create Pull Request
-        uses: Vedashri-CServe/create-pull-request@v3
-        with:
-          token: ${{ secrets.CSERVE_TOKEN }} 
-          branch: check_sonar    
+      # - name: Create Pull Request
+      #   uses: Vedashri-CServe/create-pull-request@v3
+      #   with:
+      #     token: ${{ secrets.CSERVE_TOKEN }} 
+      #     branch: check_sonar    
 
