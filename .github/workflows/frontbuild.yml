@@ -23,7 +23,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
+        with:
+           fetch-depth: 0
       - name: Set up Node.js version
         uses: actions/setup-node@v1
         with:
@@ -59,9 +60,9 @@ jobs:
           git commit -m "Code for Sonar Check"
           git push origin check_sonar
         
-      # - name: Create Pull Request
-      #   uses: Vedashri-CServe/create-pull-request@v3
-      #   with:
-      #     token: ${{ secrets.CSERVE_TOKEN }} 
-      #     branch: check_sonar    
+      - name: Create Pull Request
+        uses: Vedashri-CServe/create-pull-request@v3
+        with:
+          token: ${{ secrets.CSERVE_TOKEN }} 
+          branch: check_sonar    
 
