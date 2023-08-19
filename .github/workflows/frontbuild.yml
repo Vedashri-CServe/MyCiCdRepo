@@ -51,15 +51,15 @@ jobs:
       - name: Fetch remote branches
         run: git fetch origin    
     #------------------------    
-      - name: Overwrite Files and Folders
-        run: |
-          cp -r check_sonar/ backup_branch/
-          # Remove existing files and folders in the target branch
-          git rm -r check_sonar/
-          git commit -m "Remove existing files and folders" -a
+      # - name: Overwrite Files and Folders
+      #   run: |
+      #     cp -r check_sonar/ backup_branch/
+      #     # Remove existing files and folders in the target branch
+      #     git rm -r check_sonar/
+      #     git commit -m "Remove existing files and folders" -a
 
-          # Copy files and folders from source branch to target branch
-          # cp -r source_folder/ target_folder/
+      #     # Copy files and folders from source branch to target branch
+      #     # cp -r source_folder/ target_folder/
      #----------------------------------------------     
       - name: Push code to check_sonar branch
         run: |
