@@ -51,13 +51,13 @@ jobs:
       - name: Fetch remote branches
         run: git fetch origin    
         
-      - name: Stash changes
-        run: git stash
+      # - name: Stash changes
+      #   run: git stash
 
-      - name: Switch to check_sonar branch
-        run: |
-          git checkout check_sonar
-          git stash pop
+      # - name: Switch to check_sonar branch
+      #   run: |
+      #     git checkout check_sonar
+      #     git stash pop
           
       - name: Push code to check_sonar branch
         run: |
