@@ -65,6 +65,7 @@ jobs:
         run: |
           git config --global user.name Vedashri-CServe
           git config --global user.email vedashri@cloudservesystems.com
+          sudo git clean -dfx
           git checkout check_sonar
           
           git add .
