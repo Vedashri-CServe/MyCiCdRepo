@@ -69,7 +69,7 @@ jobs:
          
           git add .
           git commit -m "Code for Sonar Check"
-          git push origin check_sonar
+          git push -f origin check_sonar
         
       # - name: Create Pull Request
       #   uses: Vedashri-CServe/create-pull-request@v3
