@@ -65,8 +65,8 @@ jobs:
         run: |
           git config --global user.name Vedashri-CServe
           git config --global user.email vedashri@cloudservesystems.com
-          git clean -dfx .scannerwork\*
           git checkout check_sonar
+          
           git add .
           git commit -m "Code for Sonar Check"
           git push -f origin check_sonar
