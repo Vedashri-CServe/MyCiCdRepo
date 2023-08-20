@@ -65,12 +65,11 @@ jobs:
         run: |
           git config --global user.name Vedashri-CServe
           git config --global user.email vedashri@cloudservesystems.com
-          sudo git clean -dfx
           git checkout check_sonar
           
           git add .
           git commit -m "Code for Sonar Check"
-          git push -f origin check_sonar
+          sudo git push -f origin check_sonar
         
       # - name: Create Pull Request
       #   uses: Vedashri-CServe/create-pull-request@v3
