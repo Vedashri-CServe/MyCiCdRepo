@@ -25,15 +25,15 @@ jobs:
       - uses: actions/checkout@v2
         with:
            fetch-depth: 0
-      - name: Set up Node.js version
-        uses: actions/setup-node@v1
-        with:
-          node-version: '18.x'
+      # - name: Set up Node.js version
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     node-version: '18.x'
 
-      - name: npm install, build, and test
-        run: |
-          npm install --legacy-peer-deps
-          npm run build --if-present
+      # - name: npm install, build, and test
+      #   run: |
+      #     npm install --legacy-peer-deps
+      #     npm run build --if-present
       
       
       #- name: Upload artifact for deployment job
@@ -59,8 +59,9 @@ jobs:
       - name: Push code to check_sonar branch
         run: |        
           git checkout -f check_sonar
-          git add .
-          git commit -m "Code for Sonar Check"
+          git merge --no-ff design_development
+          # git add .
+          # git commit -m "Code for Sonar Check"
           sudo git push -f origin check_sonar
         
       # - name: Create Pull Request
