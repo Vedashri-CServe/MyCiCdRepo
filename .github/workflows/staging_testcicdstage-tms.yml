@@ -60,5 +60,5 @@ jobs:
       - name: Start the application
         run: |
           echo "Starting the application..."
-          ls
+          ls -a
           npm start
