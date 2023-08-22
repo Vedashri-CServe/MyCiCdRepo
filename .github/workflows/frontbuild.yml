@@ -18,7 +18,6 @@ permissions:
   
 jobs:
   Dev:
-    #runs-on: windows-latest
     runs-on: ubuntu-latest
 
     steps:
@@ -43,22 +42,24 @@ jobs:
       #    path: .
       
       - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@master
+        uses: SonarSource/sonarqube-scan-action@v1
+        # uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
   SonarScanned:
     needs: Dev
+    
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
            fetch-depth: 0
-      - name: Clean Up Scanner Folder
-        run: |
-             # sudo rm -rf .scannerwork 
-             ls -a
+      # - name: Clean Up Scanner Folder
+      #   run: |
+      #        # sudo rm -rf .scannerwork 
+      #        ls -a
             
       - name: Fetch remote branches
         run: git fetch origin     
@@ -74,9 +75,4 @@ jobs:
           git commit -m "Code for Sonar Check"
           git push origin check_sonar
         
-      # - name: Create Pull Request
-      #   uses: Vedashri-CServe/create-pull-request@v3
-      #   with:
-      #     token: ${{ secrets.CSERVE_TOKEN }} 
-      #     branch: check_sonar    
-
+     
