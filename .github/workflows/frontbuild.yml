@@ -49,9 +49,8 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
   SonarScanned:
-    #runs-on: windows-latest
+    needs: Dev
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
         with:
@@ -66,8 +65,8 @@ jobs:
 
       - name: Push code to check_sonar branch
         run: |
-          git config --global user.name kareenaCserve
-          git config --global user.email kareena@cloudservesystems.com
+          git config --global user.name Vedashri-CServe
+          git config --global user.email vedashri@cloudservesystems.com
           git add .
           git status
           git checkout check_sonar
