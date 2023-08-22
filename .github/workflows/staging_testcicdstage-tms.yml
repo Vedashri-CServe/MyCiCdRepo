@@ -60,7 +60,7 @@ jobs:
 
       - name: 'Run npm start'
         run: |
-          cd $HOME/site/wwwroot 
+          cd /home/site/wwwroot 
           ls -a
           npm start
       # - name: Start the application
