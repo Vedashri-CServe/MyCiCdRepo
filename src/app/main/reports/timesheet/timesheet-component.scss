@@ -1,0 +1,147 @@
+.timesheet_sec_css {
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    padding-bottom: 16px;
+    display: table;
+
+    tbody {
+      width: 100%;
+
+      tr {
+        border-bottom: 1px solid #ddd;
+
+        td {
+          padding: 0.7rem;
+
+          .progress {
+            width: 100%;
+          }
+
+          .text_wrap {
+            display: flex;
+            justify-content: space-between;
+
+            .collapse_btn {
+              background-color: transparent;
+              border: none;
+              box-shadow: none;
+              padding: 0;
+              outline: none;
+              font-size: 13px;
+            }
+          }
+        }
+      }
+    }
+    thead {
+      tr {
+        border-bottom: 1px solid #ddd;
+
+        th {
+          padding: 0.7rem;
+        }
+      }
+    }
+  }
+
+  .data_info {
+    display: flex;
+    justify-content: center;
+
+    span {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+
+      i {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 10px;
+      }
+
+      .present {
+        background: green;
+      }
+
+      .absent {
+        background: red;
+      }
+
+      .half {
+        background: blue;
+      }
+
+      .incomplete {
+        background: yellow;
+      }
+    }
+  }
+}
+
+.play_stop_btn_design {
+  padding: 5px 6px !important;
+  font-size: 12px;
+  border-radius: 100%;
+  .rotateresumeicon {
+    transform: rotate(90deg);
+  }
+}
+
+.css_page_dropdown {
+  width: 200px;
+
+  .label {
+    width: 65px;
+    display: inline-block;
+  }
+
+  select {
+    width: 75px;
+  }
+}
+
+.timesheetTableView {
+  .datatable-body-cell-label {
+    width: 100%;
+  }
+}
+.timesheetDataTable {
+  .datatable-body {
+    .datatable-scroll {
+      width: 100% !important;
+    }
+  }
+}
+.highlight-holiday {
+  background-color: #e4e6e7;
+  border-bottom: 1px solid #f3f2f7;
+  span {
+    &.absentLog {
+      display: none;
+    }
+  }
+}
+.highlight-holiday-leave {
+  background-color: lightblue;
+  border-bottom: 1px solid #f7f7f7;
+}
+.danger {
+  color: red;
+}
+.success {
+  color: rgb(194, 18, 194);
+}
+.warning {
+  color: orange;
+}
+.primaryc {
+  color: black;
+}
+
+.totalLogtiming ~ span.absentLog {
+  display: none;
+}

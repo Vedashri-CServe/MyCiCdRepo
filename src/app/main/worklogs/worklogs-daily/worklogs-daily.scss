@@ -1,0 +1,57 @@
+@import '@core/scss/angular/libs/toastr.component.scss';
+.select_style{
+    display: inline-block;
+    border: 0;
+    border-bottom: 1px solid $light-border-color;
+    padding: 5px;
+    border-radius: 0;
+    margin: 10px 0;
+    width: 115px;
+    &:focus{
+       border-color: $tms;
+        outline: none;
+    }
+}
+.play_stop_btn_design{
+    padding: 5px 6px !important;
+    font-size: 12px;
+    border-radius: 100%;
+    .rotateresumeicon{
+        transform: rotate(90deg);
+    }
+}
+.recurringIcon{
+    border: none !important;
+    font-size: 18px;
+}
+.workstopmodel{
+    ul{
+       padding-left: 0;
+        list-style: none;
+        li{
+            display: flex;
+            justify-content: space-between;
+            border-bottom:  1px solid $light-border-color;
+            padding: 20px;
+            &:first-child{
+                background-color: $light-border-color;
+            }  
+        }       
+    }
+}
+.refresh-box-design{
+    min-width: 105px;
+}
+.dailyworkplane_table_search{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding-top: 1.5rem;
+    padding-right: 3.6rem;
+    @media (max-width: 768px){
+        position: relative;
+        padding-top: 0.5rem;
+        padding-bottom: 0.6rem;
+        padding-right: 0;
+    }
+}

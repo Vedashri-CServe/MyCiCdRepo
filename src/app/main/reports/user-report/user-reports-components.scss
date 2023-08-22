@@ -1,0 +1,215 @@
+.user_report_sec {
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    padding-bottom: 16px;
+    display: flex;
+
+    thead,
+    tfoot {
+      width: 20%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    thead,
+    tbody,
+    tfoot {
+      display: flex;
+    }
+
+    thead tr:first-child,
+    tbody tr:first-child,
+    tfoot tr:first-child {
+      border-top: 1px solid #000;
+      border-bottom: 1px solid #000;
+    }
+
+    td,
+    th {
+      padding: 1rem;
+    }
+
+    tr {
+      border-bottom: 1px solid #ddd;
+    }
+
+    td {
+      min-height: 70px;
+      align-items: center;
+    }
+
+    thead {
+      border-right: 1px solid #ddd;
+      tr,
+      td {
+        width: 100%;
+        display: block;
+      }
+
+      td {
+        .name {
+          display: block;
+          color: black;
+        }
+      }
+    }
+    tbody {
+      flex-direction: column;
+      flex-wrap: wrap;
+      table-layout: fixed;
+      width: 60%;
+      overflow-x: auto;
+      tr {
+        display: flex;
+        th {
+          min-width: 100px;
+        }
+        td {
+          min-width: 100px;
+          text-align: center;
+        }
+      }
+    }
+    tfoot {
+      text-align: center;
+      border-left: 1px solid #ddd;
+      tr {
+        width: 100%;
+        display: flex;
+        th,
+        td {
+          width: 50%;
+          display: block;
+        }
+      }
+    }
+  }
+  .data_info {
+    display: flex;
+    justify-content: center;
+    span {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      i {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 10px;
+      }
+      .present {
+        background: green;
+      }
+      .absent {
+        background: red;
+      }
+      .half {
+        background: yellow;
+      }
+      .incomplete {
+        background: yellow;
+      }
+    }
+  }
+}
+.css_page_dropdown {
+  width: 200px;
+
+  .label {
+    width: 65px;
+    display: inline-block;
+  }
+  select {
+    width: 75px;
+  }
+}
+.cutom-user-report-acc {
+  overflow-x: auto;
+  overflow-y: hidden;
+  .card-body {
+    padding: 0 !important;
+  }
+  .card{
+    overflow: visible;
+    .card-header{
+      button{
+        width: auto;
+        border-bottom: 1px solid #ebe9f1;
+      }
+    }
+  }
+  .btn {
+    .custom-acc-icon {
+      &::before {
+        content: "\f056";
+        font: normal normal normal 14px/1 FontAwesome;
+      }
+    }
+    &.collapsed {
+      .custom-acc-icon {
+        &::before {
+          content: "\f055";
+          font: normal normal normal 14px/1 FontAwesome;
+        }
+      }
+    }
+  }
+  .user-report-custom-header {
+    display: flex;
+    .cmn-user-title {
+      min-width: 110px;
+      max-width: 110px;
+      font-size: 13px;
+      font-weight: 400;
+      text-align: center;
+      white-space: normal;
+      word-break: break-word;
+      &.custom-acc-icon{
+        min-width: 30px;
+      }
+      &.user-report-user-name{
+        min-width: 200px;
+        max-width: 200px;
+        text-align: left;
+      }
+      &.user-report-designation{
+        text-align: left;
+      }
+      &.user-report-single-day{
+        text-align: center;
+        .ng-star-inserted{
+          span{
+            float: none;
+          }
+        }
+      }
+      &.user-report-department{
+        min-width: 150px;
+        max-width: 150px;
+      }
+    }
+  }
+  .static-user-header{
+    .user-report-custom-header{
+        padding: 1rem;
+        background: #f3f2f7;
+        width: fit-content;
+        .cmn-user-title {
+          text-transform: uppercase;
+          font-weight: bold;
+          font-size: 12px;
+        }
+    }   
+  }
+}
+.highlight-holiday {
+  background-color: #e4e6e7;
+  border-bottom: 1px solid #f3f2f7;
+}
+.highlight-holiday-leave{
+  background-color: lightblue;
+  border-bottom: 1px solid #f7f7f7;
+}

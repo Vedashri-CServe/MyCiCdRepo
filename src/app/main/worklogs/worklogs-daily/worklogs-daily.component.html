@@ -1,0 +1,274 @@
+<form class="d-flex form-inline  align-items-center ml-1 ml-md-0 dailyworkplane_table_search">
+  <div class="form-group d-flex">
+    <div class="input-group">
+      <input class="form-control" placeholder="{{basicDPdata}}" [maxDate]=maxtodayDate name="selectDate"
+        [(ngModel)]="basicDPdata" ngbDatepicker #basicDP="ngbDatepicker" readonly />
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary feather icon-calendar" (click)="basicDP.toggle()" type="button"
+          rippleEffect></button>
+      </div>
+    </div>
+    <button class="btn btn-primary ml-1 round" (click)="searchData(basicDPdata)" rippleEffect [disabled]="!basicDPdata">
+      <i data-feather="plus" class="d-sm-none d-inline-block mr-0 mr-sm-1"></i>
+      <span class="d-none d-sm-inline-block">Search</span>
+    </button>
+  </div>
+</form>
+<div class="row">
+  <div class="col-md-6 col-12 d-flex">
+    <div class="d-flex justify-content-between align-items-center m-1">
+      <label class="d-flex align-items-center">Show
+        <select class="form-control mx-25" [(ngModel)]="selectedOption" (change)="selectDropdownList(selectedOption)">
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </label>
+      <label class="text-primary" style="margin-left: 15rem !important;" *ngIf="totalTime"><strong>Total Time : {{totalTime}} </strong> </label>
+    </div>
+  </div>
+  <div class="col-md-6 col-12 d-flex justify-content-start justify-content-md-end">
+    <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pb-md-0">
+      <button [disabled]="!isDateShow" class="btn btn-warning round" (click)="breaktoggle()" *ngIf="breaktype == true"
+        rippleEffect>
+        STOP BREAK
+      </button>
+      <button [disabled]="!isDateShow" class="btn btn-primary round" (click)="breaktoggle()" *ngIf="breaktype == false"
+        rippleEffect>
+        BREAK {{totalbreaktime}}
+      </button>
+      <button class="btn btn-primary ml-1 round" rippleEffect *ngIf="subMenu.IsAdd" [disabled]="!IsCreateWorkPlanButtonEnable"
+        (click)="toggleSidebar('worklogs-daily-sidebar','add','')">
+        <i data-feather="plus" class="d-sm-none d-inline-block mr-0 mr-sm-1"></i><span
+          class="d-none d-sm-inline-block">Create Work Plan</span>
+      </button>
+      <div *ngIf="!IsCreateWorkPlanButtonEnable" style="margin-left: 11px;" ngbTooltip="Please submit your yesterday / past timesheet"  placement="left">
+        <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>
+      </div>
+      <a class="btn btn-outline-secondary float-right ml-1 mb-0" ngbTooltip="Export" (click)="exportReport()"
+      rippleEffect><span [data-feather]="'download'"></span></a>
+     </div>
+  </div>
+</div>
+<ngx-datatable [rows]="rows" [rowHeight]="50" class="bootstrap core-bootstrap" [limit]="selectedOption"
+[offset]="Number" [columnMode]="ColumnMode.force" [headerHeight]="50" [selected]="selected" [selectionType]="SelectionType.checkbox"
+  [selectAllRowsOnPage]="false" [displayCheck]="displayCheck" (select)="onSelect($event)" [footerHeight]="50"
+  [scrollbarH]="true">
+  <ngx-datatable-column [width]="30" [sortable]="false" [canAutoResize]="false"  [draggable]="false"
+    [headerCheckboxable]="headerCheckboxable" [checkboxable]="true">
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Created Date" prop="Createddate" [width]="120"></ngx-datatable-column>
+  <ngx-datatable-column name="Client" prop="CPAName" [width]="120"></ngx-datatable-column>
+  <ngx-datatable-column name="Project" prop="clientName" [width]="120"></ngx-datatable-column>
+  <ngx-datatable-column name="Task/Process" prop="taskName" [width]="120">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <div container="body" class="d-flex justify-content-between refresh-box-design">
+        <span [title]="row.taskName"> {{row.taskName}}</span>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Sub Process" prop="subProcess" [width]="120">
+  </ngx-datatable-column>
+  <ngx-datatable-column name="" [width]="35" [sortable]="false">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <div ngbDropdown container="body" class="d-flex">
+        <button class="btn btn-icon btn-outline-primary btn-tms-theme play_stop_btn_design recurringIcon" [disabled]="row.Isdisabled"
+          rippleEffect *ngIf="row.RecurringStatus"><i class="fa fa-regular fa-registered"></i>
+        </button>
+      </div>
+    </ng-template>
+    <i class="fa fa-refresh" aria-hidden="true"></i>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="EST" prop="estimatedTime" [width]="100"></ngx-datatable-column>
+  <ngx-datatable-column name="Status" prop="statusLabel" [width]="120"></ngx-datatable-column>
+  <ngx-datatable-column name="QTY" prop="Quantity" [width]="80"></ngx-datatable-column>
+  <ngx-datatable-column name="Workplan" prop="IsManualLabel" [width]="110"></ngx-datatable-column>
+  <ngx-datatable-column name="Std Time" prop="totalTime" [width]="120"></ngx-datatable-column>
+  <ngx-datatable-column name="Total Time" prop="" [width]="120">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <div container="body" class="d-flex justify-content-between refresh-box-design">
+        <span [title]="row.eventDuration"> {{row.EventDuration == null ? '00:00:00' : row.eventDuration}}</span>
+        <button class="btn btn-icon btn-outline-primary btn-tms-theme play_stop_btn_design"
+          [disabled]="!isDateShow || row.Isdisabled" [ngClass]="!row.Event ? 'd-none' : 'd-block'"
+          
+          (click)="refreshTime(row)" rippleEffect *ngIf="row.EventType == 11 || row.EventType == 13 "><i
+            [ngClass]="'fa fa-refresh'"></i>
+        </button>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="" [width]="90" [sortable]="false" *ngIf="isDateShow">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <div ngbDropdown container="body" class="d-flex" *ngIf="!row.Isdisabled">
+        <button class="btn btn-icon btn-outline-primary mr-1 play_stop_btn_design" (click)="playpausetoggle(row)"
+          [ngClass]="!row.Event ? 'btn-tms-theme' : 'btn-tms-delete'" rippleEffect *ngIf="row.EventType == 0">
+          <i [ngClass]="'fa fa-play'"></i>
+        </button>
+        <button class="btn btn-icon btn-outline-primary mr-1 play_stop_btn_design" (click)="playpausetoggle(row)"
+          *ngIf="row.EventType == 12 && row.IsStop != 'STOP'"
+          [ngClass]="!row.Event ? 'btn-tms-theme' : 'btn-tms-delete'" rippleEffect>
+          <i [ngClass]="'fa fa-eject rotateresumeicon'"></i>
+        </button>
+        <button class="btn btn-icon btn-outline-warning mr-1 play_stop_btn_design" (click)="playpausetoggle(row)"
+          *ngIf="row.EventType == 11 || row.EventType == 13" [ngClass]="!row.Event ? 'btn-tms-theme' : 'btn-tms-delete'"
+          rippleEffect>
+          <i [ngClass]="'fa fa-pause text-warning'"></i>
+        </button>
+        <button class="btn btn-icon btn-outline-danger btn-tms-delete mr-1 play_stop_btn_design"
+          [ngClass]="!row.Event ? 'd-none' : 'd-block'" (click)="modalOpenBD(modalBD,modalBDONE,row)"
+          *ngIf="row.EventType == 11 || row.EventType == 13" rippleEffect>
+          <i [ngClass]="'fa fa-stop text-danger'"></i>
+        </button>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Reviewer Status" prop="ApprovalStatus" [width]="150"></ngx-datatable-column>
+  <ngx-datatable-column name="Description" prop="Description" [width]="150"></ngx-datatable-column>
+  <ngx-datatable-column name="Actions" [width]="80" [sortable]="false" *ngIf="subMenu.IsUpdate || subMenu.IsDelete">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <div ngbDropdown container="body" class="d-flex">
+        <button class="btn btn-icon btn-tms-secondary mr-1 btn-tms-theme" ngbTooltip="Comment" placement="left"
+          rippleEffect (click)="modelCommentOpen(modelComment,row)">
+          <span [data-feather]="'message-circle'"></span>
+        </button>
+        <button *ngIf="subMenu.IsUpdate" class="btn btn-icon btn-tms-secondary mr-1 btn-tms-theme" ngbTooltip="Edit"
+          placement="left" rippleEffect (click)="toggleSidebar('worklogs-daily-sidebar','Edit',row)">
+          <span [data-feather]="'edit'"></span>
+        </button>
+        <button *ngIf="subMenu.IsDelete" class="btn btn-icon btn-tms-secondary btn-tms-delete" ngbTooltip="Delete"
+          placement="left" [disabled]="(!isDateShow || row.Isdisabled )|| row.Status?.Label == 'Completed'"
+          [swal]="SweetAlertConfirmText" rippleEffect>
+          <span [data-feather]="'trash-2'"></span>
+        </button>
+        <swal #SweetAlertConfirmText (open)="ConfirmTextOpen(row)"></swal>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>
+<button class="btn btn-primary ml-1 round" rippleEffect (click)="openSaveModel(modalSAVE)" *ngIf="isShowButton">
+  <i data-feather="plus" class="d-sm-none d-inline-block mr-0 mr-sm-1"></i>
+  <span class="d-none d-sm-inline-block">SAVE & SUBMIT</span>
+</button>
+<ng-template #modelComment let-modal>
+  <div class="modal-header">
+    <h4><strong>Comments</strong></h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body workstopmodel text-dark" tabindex="0" ngbAutofocus>
+    <div class="customf comment_scrollable">
+      <div class="scrollable-container media-list ps ps--active-y">
+        <div *ngFor="let commentData of commentListData">
+          <div class="media d-flex align-items-start p-1" *ngIf="commentData.IsComment == true">
+            <div class="media-left" *ngIf="commentData.IsComment == true">
+              <div class="avatar">
+                <img alt="avatar" width="32" height="32" src="assets/images/portrait/small/user.jpg">
+              </div>
+            </div>
+            <div class="media-body" *ngIf="commentData.IsComment == true">
+              <p class="media-heading" style="margin-bottom: 0px;"><span
+                  class="font-weight-bolder">{{commentData.CommentBy}}</span></p>
+              <p style="margin-bottom: 0px; font-size: 12px;">{{commentData.CreatedOn}}</p>
+              <p class="notification-text" style="color: black;">{{commentData.Comment}}</p>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="commentListData.length == 0">
+          No records found!
+        </div>
+      </div>
+    </div>
+    <div class="form-group d-flex justify-content-end">
+      <button type="button" rippleeffect (click)="modal.dismiss('Cross click')"
+        class="btn btn-outline-primary mr-1 waves-effect waves-float waves-light round mt-1">Cancel</button>
+    </div>
+  </div>
+</ng-template>
+<!-- Modal -->
+<ng-template #modalBD let-modal>
+  <div class="modal-header">
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body workstopmodel text-dark" tabindex="0" ngbAutofocus>
+    <h4 class="p-1"><strong> You are taken more time than estimated time</strong></h4>
+    <ul>
+      <li>
+        <strong>{{taskName}}</strong> <strong>{{dataPlan.totalTime}}</strong>
+      </li>
+      <li>
+        <strong>Total estimated Time</strong> <strong>{{dataPlan.totalTime}}</strong>
+      </li>
+      <li>
+        <strong>Your total time Spent</strong> <strong>{{refreshData.EventDuration}}</strong>
+      </li>
+      <div class="p-1">
+        <p for="basicTextarea"> <strong>Reason for extra needed time</strong></p>
+        <fieldset class="form-group mb-0">
+          <textarea class="form-control" id="basicTextarea" rows="3" maxlength="500"  placeholder="Textarea" [(ngModel)]="reason"></textarea>
+        </fieldset>
+        <span>
+          <small class="form-text text-danger" *ngIf="reason && reason != '' && reason.length == 500">You can't use more than 500 characters</small>                 
+        </span>                       
+      </div>
+      <div class="form-group d-flex justify-content-end">
+        <button type="button" rippleeffect class="btn btn-primary mr-1 waves-effect waves-float waves-light round mt-1"
+          (click)="openNextModel(modalBDONE,row)" aria-label="Close" [disabled]="reason && reason != '' && reason.length == 500">Submit</button>
+        <button type="button" rippleeffect (click)="modal.dismiss('Cross click')"
+          class="btn btn-outline-primary mr-1 waves-effect waves-float waves-light round mt-1">Cancel</button>
+      </div>
+    </ul>
+  </div>
+</ng-template>
+<!-- / Modal -->
+<!-- Modal -->
+<ng-template #modalBDONE let-modal>
+  <div class="modal-header">
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body workstopmodel text-dark" tabindex="0" ngbAutofocus>
+    <div class="p-1">
+      <p for="basicTextarea"> <strong>Are you sure you have completed your task as after submit edit is not allowed?</strong></p>
+    </div>
+    <div class="form-group d-flex justify-content-end">
+      <button type="button" rippleeffect class="btn btn-primary mr-1 waves-effect waves-float waves-light round mt-1"
+        (click)="Continuetask()" aria-label="Close">Yes Continue</button>
+      <button type="button" rippleeffect
+        class="btn btn-outline-primary mr-1 waves-effect waves-float waves-light round mt-1"
+        (click)="modal.dismiss('Cross click')">Cancel</button>
+    </div>
+  </div>
+</ng-template>
+<!-- / Modal -->
+<ng-template #modalSAVE let-modal>
+  <div class="modal-header">
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body workstopmodel text-dark" tabindex="0" ngbAutofocus>
+    <ul>
+      <div class="p-1">
+        <p for="basicTextarea"><strong>Are you sure you want to submit your task/timesheet?</strong></p>
+      </div>
+      <div class="form-group d-flex justify-content-end">
+        <button type="button" rippleeffect class="btn btn-primary mr-1 waves-effect waves-float waves-light round mt-1"
+          (click)="SubmitApprove()" aria-label="Close">Yes Continue</button>
+        <button type="button" rippleeffect (click)="modal.dismiss('Cross click')"
+          class="btn btn-outline-primary mr-1 waves-effect waves-float waves-light round mt-1">Cancel</button>
+      </div>
+    </ul>
+  </div>
+</ng-template>
+<!-- New Worklogs Sidebar -->
+<core-sidebar class="modal modal-slide-in sidebar-todo-modal fade" name="worklogs-daily-sidebar"
+  overlayClass="modal-backdrop" hideOnEsc="true">
+  <app-worklogs-daily-sidebar></app-worklogs-daily-sidebar>
+</core-sidebar>
+<!--/ New Worklogs Sidebar -->
+<block-ui> </block-ui>

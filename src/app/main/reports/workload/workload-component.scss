@@ -1,0 +1,192 @@
+.faq_title {
+  display: flex;
+  justify-content: space-between;
+  text-transform: capitalize;
+  color: #333;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+  padding: 10px;
+  .hours {
+    margin-right: 30px;
+  }
+}
+.faq_ques {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  cursor: pointer;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  box-shadow: none;
+  .text_wrap {
+    .time {
+      margin-right: 15px;
+      font-weight: 700;
+    }
+    i {
+      font-size: 18px;
+    }
+  }
+}
+.ques_body {
+  padding: 10px;
+}
+.css_page_dropdown {
+  width: 200px;
+  .label {
+    width: 65px;
+    display: inline-block;
+  }
+  select {
+    width: 75px;
+  }
+}
+.workloadAcc {
+  &.accordion {
+    & > .card {
+      // &:first-child{
+      //   .ng-star-inserted{
+      //     background: #f3f2f7;
+      //     .custom-header-parent {
+      //       display: flex;
+      //       justify-content: end;
+      //       font-size: 13px;
+      //       font-weight: bold;
+      //       letter-spacing: 1px;
+      //       white-space: normal;
+      //       word-break: break-word;
+      //       .custom-user-name{
+      //         text-transform: uppercase;
+      //       }
+      //       .custom-std-time{
+      //         text-transform: uppercase;
+      //       }
+      //       .custom-total-time{
+      //         text-transform: uppercase;
+      //       } 
+      //     }
+          
+      //   }
+      // }
+      .card-body {
+        padding: 0;
+      }
+    }
+  }
+  .lead {
+    width: 100%;
+    .custom-header-parent {
+      display: flex;
+      justify-content: end;
+      font-size: 13px;
+      font-weight: 400;
+      white-space: normal;
+      word-break: break-word;
+      text-transform: capitalize;
+      .custom-user-name {
+        width: 50%;
+      }
+      .custom-std-time {
+        width: 20%;
+      }
+      .custom-role-type {
+        width: 20%;
+      }
+      .custom-total-time {
+        width: 20%;
+      }
+      .custom-icon {
+        width: 10%;
+      }
+    }
+  }
+  .btn {
+    .custom-acc-icon {
+      &::before {
+        content: "\f056";
+        font: normal normal normal 14px/1 FontAwesome;
+      }
+    }
+    &.collapsed {
+      .custom-acc-icon {
+        &::before {
+          content: "\f055";
+          font: normal normal normal 14px/1 FontAwesome;
+        }
+      }
+    }
+  }
+}
+.workloadAccheader{
+  &.accordion {
+    & > .card {
+      &:first-child{
+        .ng-star-inserted{
+          background: #f3f2f7;
+          .custom-header-parent {
+            display: flex;
+            justify-content: end;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            white-space: normal;
+            word-break: break-word;
+            .custom-user-name{
+              text-transform: uppercase;
+            }
+            .custom-std-time{
+              text-transform: uppercase;
+            }
+            .custom-total-time{
+              text-transform: uppercase;
+            } 
+          }
+          
+        }
+      }
+      .card-body {
+        padding: 0;
+      }
+    }
+  }
+  .lead {
+    width: 100%;
+    .custom-header-parent {
+      display: flex;
+      justify-content: end;
+      font-size: 13px;
+      font-weight: 400;
+      white-space: normal;
+      word-break: break-word;
+      text-transform: capitalize;
+      .custom-user-name {
+        width: 50%;
+      }
+      .custom-std-time {
+        width: 20%;
+      }
+      .custom-total-time {
+        width: 20%;
+      }
+      .custom-icon {
+        width: 10%;
+      }
+    }
+  }
+  .btn {
+    .custom-acc-icon {
+      &::before {
+        content: "\f056";
+        font: normal normal normal 14px/1 FontAwesome;
+      }
+    }
+    &.collapsed {
+      .custom-acc-icon {
+        &::before {
+          content: "\f055";
+          font: normal normal normal 14px/1 FontAwesome;
+        }
+      }
+    }
+  }
+}

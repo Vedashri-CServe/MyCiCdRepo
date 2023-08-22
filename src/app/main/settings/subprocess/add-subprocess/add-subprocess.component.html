@@ -1,0 +1,57 @@
+<div class="slideout-content">
+    <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+        <div class="modal-dialog">
+            <form class="add-new-user modal-content pt-0" (ngSubmit)="(newSubProcessForm.form.valid)"
+                #newSubProcessForm="ngForm">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    (click)="toggleSidebar('add-subprocess')">
+                    ×
+                </button>
+                <div class="modal-header mb-1">
+                    <h5 class="modal-title" id="exampleModalLabel">{{!isEdit ? 'Add SubProcess' : 'Edit SubProcess'}}
+                    </h5>
+                </div>
+                <div class="modal-body flex-grow-1 px-3">
+                    <!-- <div class="form-group mb-2">
+              <label class="form-label" for="user-plan">Select Process</label>
+              <ng-select #selectMultiLimited="ngModel" [items]="processList"  bindLabel="name"
+                [(ngModel)]="selectMultiLimitedSelected" [ngModelOptions]="{standalone: true}" required>
+                <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                  <span class="ng-value-label"> {{ item.name }}</span>
+                  <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+                </ng-template>
+              </ng-select>
+              <span *ngIf="newSubProcessForm.submitted " class="invalid-form">
+                <small class="form-text text-danger" *ngIf="selectMultiLimitedSelected.length == 0">This field is required!</small>
+              </span>
+            </div> -->
+                    <div class="form-group">
+                        <label class="form-label" for="form-work-type">Process</label>
+                        <ng-select [items]="processList" bindLabel="name" name="process" [(ngModel)]="process"
+                            [class.error]="newSubProcessForm.submitted && FWorkTypeRef.invalid" #FWorkTypeRef="ngModel"
+                            required>
+                        </ng-select>
+                        <span *ngIf="newSubProcessForm.submitted && FWorkTypeRef.invalid" class="invalid-form">
+                            <small class="form-text text-danger" *ngIf="FWorkTypeRef.errors.required">This field is
+                                required!</small>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="largeInput">Sub-process</label>
+                        <input class="form-control" type="text" placeholder="Sub-process" name="subProcess"
+                            [(ngModel)]="subProcess"
+                            [class.error]="newSubProcessForm.submitted && FSubProcessRef.invalid"
+                            #FSubProcessRef="ngModel" required />
+                        <span *ngIf="newSubProcessForm.submitted && FSubProcessRef.invalid" class="invalid-form">
+                            <small class="form-text text-danger" *ngIf="FSubProcessRef.errors.required">This field is
+                                required!</small>
+                        </span>
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-1" (click)="submit(newSubProcessForm)"
+                        rippleEffect>{{!isEdit ?
+                        'Add SubProcess Now':'Update SubProcess Now'}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

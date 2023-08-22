@@ -1,0 +1,36 @@
+@import '@core/scss/angular/libs/datatables.component.scss';
+@import '@core/scss/angular/libs/date-time-picker.component.scss';
+@import '@core/scss/angular/libs/blockui.component.scss';
+.wordwrapbody {
+    datatable-body-cell {
+        .datatable-body-cell-label { span {
+                white-space: normal;
+                word-break: break-word;
+            }
+        }
+    }
+}
+.ng-select {
+    .ng-clear-wrapper {
+        display: none;
+    }
+}
+.ngx-datatable.bootstrap.core-bootstrap .datatable-footer .datatable-pager ul li:not(.disabled).active a, .ngx-datatable.bootstrap.core-bootstrap .datatable-footer .datatable-pager ul li:not(.disabled).active:hover a{
+    width:36px !important;
+}
+.tab-pane {
+    .ngx-datatable {
+        &.fixed-row { .datatable-scroll {
+                .datatable-body-row {
+                    .datatable-body-cell {
+                        white-space: normal;
+                        word-break: break-word;
+                        .color-font-none{
+                            font-size:0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

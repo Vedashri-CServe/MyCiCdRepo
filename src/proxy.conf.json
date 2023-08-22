@@ -1,0 +1,7 @@
+  {
+    "/api": {
+        "target": "https://staging-usermanagement.azurewebsites.net/",
+        "secure": false
+       
+    }
+}

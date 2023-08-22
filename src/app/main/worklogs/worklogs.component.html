@@ -1,0 +1,57 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+         <section class="users-list-wrapper">
+            <div class="card">
+                <section id="basic-tabs-components">
+                    <div class="row match-height">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card-body" *ngIf="subMenu">
+                                <ul ngbNav #nav="ngbNav" class="nav-tabs">
+                                    <li ngbNavItem *ngIf="subMenu[0]?.IsShow">
+                                        <a ngbNavLink>{{subMenu[0]?.DisplayName}}</a>
+                                        <ng-template ngbNavContent>
+                                            <app-worklogs-timeline></app-worklogs-timeline>
+                                        </ng-template>
+                                    </li>
+                                    <li ngbNavItem  *ngIf="subMenu[1]?.IsShow">
+                                        <a ngbNavLink>{{subMenu[1]?.DisplayName}}</a>
+                                        <ng-template ngbNavContent>
+                                            <app-worklogs-daily></app-worklogs-daily>
+                                        </ng-template>
+                                    </li>
+                                    <li ngbNavItem *ngIf="subMenu[2]?.IsShow">
+                                        <a ngbNavLink>{{subMenu[2]?.DisplayName}}</a>
+                                        <ng-template ngbNavContent><app-worklogs-reviewtimesheet></app-worklogs-reviewtimesheet>
+                                        </ng-template>
+                                    </li>
+                                </ul> <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                               </div>
+                               <!-- <div class="card-body">
+                                <ul ngbNav #nav="ngbNav" class="nav-tabs">
+                                    <li ngbNavItem>
+                                        <a ngbNavLink>TimeLine</a>
+                                        <ng-template ngbNavContent>
+                                            <app-worklogs-timeline></app-worklogs-timeline>
+                                        </ng-template>
+                                    </li>
+                                    <li ngbNavItem >
+                                        <a ngbNavLink>Daily Work Plan</a>
+                                        <ng-template ngbNavContent>
+                                            <app-worklogs-daily></app-worklogs-daily>
+                                        </ng-template>
+                                    </li>
+                                    <li ngbNavItem>
+                                        <a ngbNavLink>Review Time Sheet</a>
+                                        <ng-template ngbNavContent><app-worklogs-reviewtimesheet></app-worklogs-reviewtimesheet>
+                                        </ng-template>
+                                    </li>
+                                </ul> <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                               </div> -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+      </div>
+</div>
+<block-ui> </block-ui>

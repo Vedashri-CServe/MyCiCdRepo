@@ -1,0 +1,280 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <div class="row match-height">
+      <!-- Productive/Unproductive Chart -->
+      <div class="col-lg-4 col-12">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between pb-0">
+            <h4 class="card-title">Productive/Unproductive</h4>
+            <div ngbDropdown class="chart-dropdown">
+              <button
+                rippleEffect
+                class="btn btn-sm border-0 p-50"
+                ngbDropdownToggle
+                type="button"
+                id="dropdownItem4"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Last 7 Days
+              </button>
+              <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownItem4">
+                <a ngbDropdownItem href="javascript:void(0);">Last 28 Days</a>
+                <a ngbDropdownItem href="javascript:void(0);">Last Month</a>
+                <a ngbDropdownItem href="javascript:void(0);">Last Year</a>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-10 col-12 d-flex justify-content-center" #supportChartRef>
+                <div id="puChartoptions">
+                    <!-- Apexchart component-->
+                    <apx-chart
+                      [chart]="{
+                        type: 'pie',
+                        height: 235,
+                        width:
+                          isMenuToggled === false
+                            ? supportChartRef.offsetWidth
+                            : puChartoptions.chart.width,
+                        toolbar: {
+                          show: false
+                        }
+                      }"
+                      [labels]="puChartoptions.labels"
+                      [series]="data.pu.series"
+                      [dataLabels]="puChartoptions.dataLabels"
+                      [legend]="puChartoptions.legend"
+                      [stroke]="puChartoptions.stroke"
+                      [colors]="puChartoptions.colors"
+                    ></apx-chart>
+                    <!-- / Apexchart component-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--/ Productive/Unproductive Chart -->
+
+      <!-- Client Status Chart -->
+      <div class="col-lg-4 col-12">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between pb-0">
+            <h4 class="card-title">Client Status</h4>
+            <div ngbDropdown class="chart-dropdown">
+              <button
+                rippleEffect
+                class="btn btn-sm border-0 p-50"
+                ngbDropdownToggle
+                type="button"
+                id="dropdownItem4"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Last 7 Days
+              </button>
+              <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownItem4">
+                <a ngbDropdownItem href="javascript:void(0);">Last 28 Days</a>
+                <a ngbDropdownItem href="javascript:void(0);">Last Month</a>
+                <a ngbDropdownItem href="javascript:void(0);">Last Year</a>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-10 col-12 d-flex justify-content-center" #supportChartRef>
+                <div id="clientChartoptions">
+                    <!-- Apexchart component-->
+                    <apx-chart
+                      [chart]="{
+                        type: 'pie',
+                        height: 235,
+                        width:
+                          isMenuToggled === false
+                            ? supportChartRef.offsetWidth
+                            : clientChartoptions.chart.width,
+                        toolbar: {
+                          show: false
+                        }
+                      }"
+                      [labels]="clientChartoptions.labels"
+                      [series]="data.client.series"
+                      [dataLabels]="clientChartoptions.dataLabels"
+                      [legend]="clientChartoptions.legend"
+                      [stroke]="clientChartoptions.stroke"
+                      [colors]="clientChartoptions.colors"
+                    ></apx-chart>
+                    <!-- / Apexchart component-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--/ Client Status Chart -->
+
+      <!-- Billing Type Chart -->
+      <div class="col-lg-4 col-12">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between pb-0">
+            <h4 class="card-title">Billing Type</h4>
+            <div ngbDropdown class="chart-dropdown">
+              <button
+                rippleEffect
+                class="btn btn-sm border-0 p-50"
+                ngbDropdownToggle
+                type="button"
+                id="dropdownItem4"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Last 7 Days
+              </button>
+              <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownItem4">
+                <a ngbDropdownItem href="javascript:void(0);">Last 28 Days</a>
+                <a ngbDropdownItem href="javascript:void(0);">Last Month</a>
+                <a ngbDropdownItem href="javascript:void(0);">Last Year</a>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-10 col-12 d-flex justify-content-center" #supportChartRef>
+                <div id="billingChartoptions">
+                    <!-- Apexchart component-->
+                    <apx-chart
+                      [chart]="{
+                        type: 'pie',
+                        height: 235,
+                        width:
+                          isMenuToggled === false
+                            ? supportChartRef.offsetWidth
+                            : billingChartoptions.chart.width,
+                        toolbar: {
+                          show: false
+                        }
+                      }"
+                      [labels]="billingChartoptions.labels"
+                      [series]="data.billing.series"
+                      [dataLabels]="billingChartoptions.dataLabels"
+                      [legend]="billingChartoptions.legend"
+                      [stroke]="billingChartoptions.stroke"
+                      [colors]="billingChartoptions.colors"
+                    ></apx-chart>
+                    <!-- / Apexchart component-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--/ Billing Type Chart -->
+    </div>
+        
+    <div class="row match-height">
+      <!-- Type of work Chart -->
+      <div class="col-lg-4 col-12">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between pb-0">
+            <h4 class="card-title">Type Of Work</h4>
+            <div ngbDropdown class="chart-dropdown">
+              <button
+                rippleEffect
+                class="btn btn-sm border-0 p-50"
+                ngbDropdownToggle
+                type="button"
+                id="dropdownItem4"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Last 7 Days
+              </button>
+              <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownItem4">
+                <a ngbDropdownItem href="javascript:void(0);">Last 28 Days</a>
+                <a ngbDropdownItem href="javascript:void(0);">Last Month</a>
+                <a ngbDropdownItem href="javascript:void(0);">Last Year</a>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-10 col-12 d-flex justify-content-center" #supportChartRef>
+                <div id="workChartoptions">
+                    <!-- Apexchart component-->
+                    <apx-chart
+                      [chart]="{
+                        type: 'pie',
+                        height: 235,
+                        width:
+                          isMenuToggled === false
+                            ? supportChartRef.offsetWidth
+                            : workChartoptions.chart.width,
+                        toolbar: {
+                          show: false
+                        }
+                      }"
+                      [labels]="workChartoptions.labels"
+                      [series]="data.typeofwork.series"
+                      [dataLabels]="workChartoptions.dataLabels"
+                      [legend]="workChartoptions.legend"
+                      [stroke]="workChartoptions.stroke"
+                      [colors]="workChartoptions.colors"
+                    ></apx-chart>
+                    <!-- / Apexchart component-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--/ Type of work Card -->
+
+      <!-- Estimated/Actual Hours Chart -->
+      <!-- <div class="col-lg-4 col-12">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between pb-0">
+            <h4 class="card-title">Estimated/Actual Hours</h4>
+            <div ngbDropdown class="chart-dropdown">
+              <button
+                rippleEffect
+                class="btn btn-sm border-0 p-50"
+                ngbDropdownToggle
+                type="button"
+                id="dropdownItem4"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Last 7 Days
+              </button>
+              <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownItem4">
+                <a ngbDropdownItem href="javascript:void(0);">Last 28 Days</a>
+                <a ngbDropdownItem href="javascript:void(0);">Last Month</a>
+                <a ngbDropdownItem href="javascript:void(0);">Last Year</a>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-10 col-12 d-flex justify-content-center" #supportChartRef>
+                <div id="supportChartoptions">
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+      <!--/ Estimated/Actual Hours Chart -->
+
+     
+    </div>
+
+  </div>
+</div>
