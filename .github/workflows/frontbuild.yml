@@ -15,9 +15,9 @@ on:
 permissions:
   contents: write
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
-
+  
 jobs:
-  build:
+  Dev:
     #runs-on: windows-latest
     runs-on: ubuntu-latest
 
@@ -48,21 +48,32 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
-      - name: Fetch remote branches
-        run: git fetch origin    
-    
-      - name: set up check_sonar branch
+  SonarScanned:
+    #runs-on: windows-latest
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+           fetch-depth: 0
+      - name: Clean Up Scanner Folder
         run: |
-          git config --global user.name Vedashri-CServe
-          git config --global user.email vedashri@cloudservesystems.com
-          sudo chmod -R ug+w .;
+             # sudo rm -rf .scannerwork 
+             ls -a
+            
+      - name: Fetch remote branches
+        run: git fetch origin     
+
       - name: Push code to check_sonar branch
-        run: |        
-          git checkout -f check_sonar
-          git merge --no-ff design_development
-          # git add .
-          # git commit -m "Code for Sonar Check"
-          sudo git push -f origin check_sonar
+        run: |
+          git config --global user.name kareenaCserve
+          git config --global user.email kareena@cloudservesystems.com
+          git add .
+          git status
+          git checkout check_sonar
+          git checkout design_development .
+          git commit -m "Code for Sonar Check"
+          git push origin check_sonar
         
       # - name: Create Pull Request
       #   uses: Vedashri-CServe/create-pull-request@v3
