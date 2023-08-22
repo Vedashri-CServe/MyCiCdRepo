@@ -18,8 +18,7 @@ permissions:
   
 jobs:
   Dev:
-    runs-on: windows-latest
-    # runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -51,8 +50,8 @@ jobs:
 
   SonarScanned:
     needs: Dev
-    runs-on: windows-latest
-    # runs-on: ubuntu-latest
+    
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
@@ -76,9 +75,4 @@ jobs:
           git commit -m "Code for Sonar Check"
           git push origin check_sonar
         
-      # - name: Create Pull Request
-      #   uses: Vedashri-CServe/create-pull-request@v3
-      #   with:
-      #     token: ${{ secrets.CSERVE_TOKEN }} 
-      #     branch: check_sonar    
-
+     
