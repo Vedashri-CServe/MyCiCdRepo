@@ -36,8 +36,8 @@ jobs:
       #     path: .
 
   deploy:
-    # runs-on: ubuntu-latest
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
+    # runs-on: windows-latest
     needs: build
     environment:
       name: 'Production'
@@ -57,8 +57,14 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EB19FB0889E04566AD62186546168769 }}
           package: .
-      - name: Start the application
+
+      - name: 'Run npm start'
         run: |
-          echo "Starting the application..."
-          dir /a:hd 
+          cd $HOME/site/wwwroot 
+          ls -a
           npm start
+      # - name: Start the application
+      #   run: |
+      #     echo "Starting the application..."
+      #     dir /a:hd 
+      #     npm start
