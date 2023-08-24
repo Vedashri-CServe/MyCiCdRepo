@@ -32,6 +32,7 @@ jobs:
           npm install --legacy-peer-deps
           npm run build --if-present
           # npm run test --if-present
+          ls -a
       
       # - name: Upload artifact for deployment job
       #   uses: actions/upload-artifact@v2
@@ -52,9 +53,9 @@ jobs:
     # runs-on: ubuntu-latest
     runs-on: windows-latest
     needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    # environment:
+    #   name: 'Production'
+    #   url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
       # - name: Download artifact from build job
@@ -63,7 +64,7 @@ jobs:
       #     name: node-app
 
       - name: 'Deploy to Azure Web App'
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
           app-name: 'Testcicdstage-tms'
