@@ -10,14 +10,17 @@ on:
   workflow_dispatch:
   
 permissions:
-  contents: write
+  contents: |
+       - write
+       - read
 
 jobs:
   build:
-    runs-on: windows-latest
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    # runs-on: windows-latest
+    runs-on: ubuntu-latest
+    # environment:
+    #   name: 'Production'
+    #   url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -50,12 +53,12 @@ jobs:
       #     package: .    
 
   deploy:
-    # runs-on: ubuntu-latest
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
+    # runs-on: windows-latest
     needs: build
-    # environment:
-    #   name: 'Production'
-    #   url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
       # - name: Download artifact from build job
