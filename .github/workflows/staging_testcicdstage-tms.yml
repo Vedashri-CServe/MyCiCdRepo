@@ -8,6 +8,9 @@ on:
     branches:
       - staging
   workflow_dispatch:
+  
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -30,12 +33,12 @@ jobs:
           npm run build --if-present
           # npm run test --if-present
       
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
-        with:
-          name: node-app
-          path: .
-
+      # - name: Upload artifact for deployment job
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: node-app
+      #     path: .
+      # ===========================
       # - name: 'Deploy to Azure Web App'
       #   uses: azure/webapps-deploy@v2
       #   id: deploy-to-webapp
@@ -54,10 +57,10 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v2
-        with:
-          name: node-app
+      # - name: Download artifact from build job
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: node-app
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
