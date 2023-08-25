@@ -34,16 +34,21 @@ jobs:
       # - name: Zip artifact for deployment
       #   run: zip release.zip ./* -r    
 
-      - name: Archive step
-        # run:  Compress-Archive . release.zip
-        run: Compress-Archive ./* release.zip
+      - name: Create ZIP Archive
+        run: |
+         # Set the ZIP_FILENAME environment variable
+         $env:ZIP_FILENAME = "archive.zip"
+        
+         # Create a ZIP archive of the repository contents
+         Compress-Archive -Path * -DestinationPath $env:ZIP_FILENAME
+
       
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
           # path: .
-          path: release.zip
+          path: archive.zip
       # ===========================
       # - name: 'Deploy to Azure Web App'
       #   uses: azure/webapps-deploy@v2
@@ -68,8 +73,8 @@ jobs:
         with:
           name: node-app
 
-      # - name: unzip artifact for deployment
-      #   run: unzip release.zip
+      - name: unzip artifact for deployment
+        run: unzip archive.zip
 
       # - name: Expand Artifact
       #   run: Expand-Archive release.zip   
