@@ -54,8 +54,8 @@ jobs:
       #     package: .    
 
   deploy:
-    runs-on: ubuntu-latest
-    # runs-on: windows-latest
+    # runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: build
     environment:
       name: 'Production'
@@ -67,11 +67,11 @@ jobs:
         with:
           name: node-app
 
-      - name: unzip artifact for deployment
-        run: unzip release.zip
+      # - name: unzip artifact for deployment
+      #   run: unzip release.zip
 
-      # - name: Expand Artifact
-      #   run: Expand-Archive release.zip   
+      - name: Expand Artifact
+        run: Expand-Archive release.zip   
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
